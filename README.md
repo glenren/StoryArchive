@@ -6,7 +6,7 @@ This application is used to store original story worlds, including plot outlines
 
 **Story Archive** is designed to help story builders store their ideas and creations in a single, easy to navigate application.
 
-As someone who creates lots of characters and stories in my head, I wanted to have a place to store and organize my often disorganized thoughts.
+As someone who creates lots of characters and stories in my head, I wanted to have a place to store and organize my often disorganized thoughts. As an artist, I also wanted a program where I can store and easily view my related artworks. **Story Archive** is meant to take those wishes and make them come to life in one simple program.
 
 ## User Stories
 
