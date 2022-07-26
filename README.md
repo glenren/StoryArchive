@@ -12,7 +12,9 @@ As someone who creates lots of characters and stories in my head, I wanted to ha
 
 As a user, I want to...
 
-- As a user, I want to be able to create multiple worlds
+- As a user, I want to be able to add multiple Worlds to a WorldsLib
+- As a user, I want to be able to add multiple Characters to a CharacterLib
+- As a user, I want to be able to add multiple Pages to a PageLib
 - As a user, I want to be able to add world details to each world
 - As a user, I want to be able to add characters to each world's character library
 - As a user, I want to be able to add story pages to each world's story library
