@@ -15,6 +15,7 @@ As a user, I want to...
 - As a user, I want to be able to add multiple Worlds to a WorldsLib
 - As a user, I want to be able to add multiple Characters to a CharacterLib
 - As a user, I want to be able to add multiple Pages to a PageLib
+
 - As a user, I want to be able to add world details to each world
 - As a user, I want to be able to add characters to each world's character library
 - As a user, I want to be able to add story pages to each world's story library
@@ -28,3 +29,6 @@ As a user, I want to...
 - As a user, I want to be able to add text to pages
 - As a user, I want to be able to replace text in pages
 - As a user, I want to be able to go back between pages
+
+- As a user, I want to be able to save my Archive (worlds, characters, pages, etc.) to file 
+- As a user, I want to be able to be able to load my Archive (worlds, characters, pages, etc.) from file 

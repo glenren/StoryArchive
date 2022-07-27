@@ -86,7 +86,8 @@ public class StoryArchiveApp {
     // EFFECTS: provides the new world creation menu where users can create new worlds
     private void createNewWorld(String name) {
         System.out.println("\nCreate a new world named " + name + "?");
-        System.out.println("Press [1] to proceed and [2] to go back.");
+        System.out.println("\t[1] Proceed.");
+        System.out.println("\t[2] Go back.");
         String command = input.next();
         if (command.equals("1")) {
             World newWorld = new World(name);
@@ -178,11 +179,11 @@ public class StoryArchiveApp {
         String command = input.next();
 
         if (command.equals("1")) {
-            viewDetails(world.getDetailsLib());
+            viewDetails(world.getDetailsLib(), world);
         } else if (command.equals("2")) {
-            viewCharas(world.getCharaLib());
+            viewCharas(world.getCharaLib(), world);
         } else if (command.equals("3")) {
-            viewStory(world.getStoryLib());
+            viewStory(world.getStoryLib(), world);
         } else if (command.equals("4")) {
             System.out.println("Returning to menu.");
         } else {
@@ -194,10 +195,10 @@ public class StoryArchiveApp {
     // EFFECTS: provides a world details library editing menu
     private void editDetails(PageLib details, World world) {
         System.out.println("\nWhat part of " + world.getName() + "'s details would you like to edit?");
-        System.out.println("\t1: Create new page.");
-        System.out.println("\t2: Edit existing page.");
-        System.out.println("\t3: Go back to World editor.");
-        System.out.println("\t4: Return to main menu.");
+        System.out.println("\t[1] Create new page.");
+        System.out.println("\t[2] Edit existing page.");
+        System.out.println("\t[3] Go back to World editor.");
+        System.out.println("\t[4] Return to main menu.");
 
         String command = input.next();
 
@@ -218,10 +219,10 @@ public class StoryArchiveApp {
     // EFFECTS: provides a character library editing menu
     private void editCharas(CharacterLib charas, World world) {
         System.out.println("\nHow would you like to edit " + world.getName() + "'s characters?");
-        System.out.println("\t1: Create new character.");
-        System.out.println("\t2: Edit existing character.");
-        System.out.println("\t3: Go back to World editor.");
-        System.out.println("\t4: Return to main menu.");
+        System.out.println("\t[1] Create new character.");
+        System.out.println("\t[2] Edit existing character.");
+        System.out.println("\t[3] Go back to World editor.");
+        System.out.println("\t[4] Return to main menu.");
 
         String command = input.next();
 
@@ -242,10 +243,10 @@ public class StoryArchiveApp {
     // EFFECTS: provides a story editing menu
     private void editStory(PageLib story, World world) {
         System.out.println("\nWhat part of " + world.getName() + "'s story would you like to edit?");
-        System.out.println("\t1: Create new chapter.");
-        System.out.println("\t2: Edit existing chapter.");
-        System.out.println("\t3: Go back to World editor.");
-        System.out.println("\t4: Return to main menu.");
+        System.out.println("\t[1] Create new chapter.");
+        System.out.println("\t[2] Edit existing chapter.");
+        System.out.println("\t[3] Go back to World editor.");
+        System.out.println("\t[4] Return to main menu.");
 
         String command = input.next();
 
@@ -278,8 +279,8 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for the creation of a new details page
     public void createNewDetailsPage(PageLib details, String name) {
         System.out.println("\nCreate a new page titled " + name + "?");
-        System.out.println("\t1: Proceed.");
-        System.out.println("\t2: Go back.");
+        System.out.println("\t[1] Proceed.");
+        System.out.println("\t[2] Go back.");
 
         String command = input.next();
 
@@ -315,8 +316,8 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for the creation of a new chapter
     public void createNewStoryChapter(PageLib story, String name) {
         System.out.println("\nCreate a new chapter titled " + name + "?");
-        System.out.println("\t1: Proceed.");
-        System.out.println("\t2: Go back.");
+        System.out.println("\t[1] Proceed.");
+        System.out.println("\t[2] Go back.");
 
         String command = input.next();
 
@@ -352,8 +353,8 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for the creation of a new character
     public void createNewCharacter(CharacterLib charas, String name) {
         System.out.println("\nCreate a new character named " + name + "?");
-        System.out.println("\t1: Proceed.");
-        System.out.println("\t2: Go back.");
+        System.out.println("\t[1] Proceed.");
+        System.out.println("\t[2] Go back.");
 
         String command = input.next();
 
@@ -382,8 +383,8 @@ public class StoryArchiveApp {
 
         System.out.println("Confirm your submission: ");
         System.out.println((page.getBody() + " " + text));
-        System.out.println("\t1: Proceed.");
-        System.out.println("\t2: Go back.");
+        System.out.println("\t[1] Proceed.");
+        System.out.println("\t[2] Go back.");
 
         String command = input.next();
 
@@ -405,8 +406,8 @@ public class StoryArchiveApp {
 
         System.out.println("Confirm your submission: ");
         System.out.println((chara.getDesc() + " " + text));
-        System.out.println("\t1: Proceed.");
-        System.out.println("\t2: Go back.");
+        System.out.println("\t[1] Proceed.");
+        System.out.println("\t[2] Go back.");
 
         String command = input.next();
 
@@ -428,8 +429,8 @@ public class StoryArchiveApp {
 
         System.out.println("Confirm your submission: ");
         System.out.println(text);
-        System.out.println("\t1: Proceed.");
-        System.out.println("\t2: Go back.");
+        System.out.println("\t[1] Proceed.");
+        System.out.println("\t[2] Go back.");
 
         String command = input.next();
 
@@ -451,8 +452,8 @@ public class StoryArchiveApp {
 
         System.out.println("Confirm your submission: ");
         System.out.println(text);
-        System.out.println("\t1: Proceed.");
-        System.out.println("\t2: Go back.");
+        System.out.println("\t[1] Proceed.");
+        System.out.println("\t[2] Go back.");
 
         String command = input.next();
 
@@ -473,8 +474,8 @@ public class StoryArchiveApp {
         String text = input.next();
 
         System.out.println("The new title will be: " + text + ".");
-        System.out.println("\t1: Proceed.");
-        System.out.println("\t2: Go back.");
+        System.out.println("\t[1] Proceed.");
+        System.out.println("\t[2] Go back.");
 
         String command = input.next();
 
@@ -495,8 +496,8 @@ public class StoryArchiveApp {
         String text = input.next();
 
         System.out.println("The new name will be: " + text + ".");
-        System.out.println("\t1: Proceed.");
-        System.out.println("\t2: Go back.");
+        System.out.println("\t[1] Proceed.");
+        System.out.println("\t[2] Go back.");
 
         String command = input.next();
 
@@ -532,7 +533,7 @@ public class StoryArchiveApp {
 
 
     // EFFECTS: provides the menu for the viewing of existing detail pages
-    public void viewDetails(PageLib details) {
+    public void viewDetails(PageLib details, World world) {
         if (details.isEmpty()) {
             System.out.print("You have no existing world detail pages to view.");
         } else {
@@ -545,8 +546,66 @@ public class StoryArchiveApp {
             } catch (NotFoundException exc) {
                 System.out.println("There is no page found with the inputted title.");
                 System.out.println("(Hint: make sure your capitalization is correct!)");
-                viewDetails(details);
+                viewDetails(details, world);
             }
+            viewNextDetails(details, world);
+        }
+    }
+
+    // EFFECTS: provides the menu after viewing a detail
+    public void viewNextDetails(PageLib details, World world) {
+        System.out.println("\nWhat would you like to do next?");
+        System.out.println("\t[1] View more world details.");
+        System.out.println("\t[2] Go back.");
+        System.out.println("\t[3] Return to main menu.");
+        String answer = input.next();
+        if (answer.equals("1")) {
+            viewDetails(details, world);
+        } else if (answer.equals("2")) {
+            viewWorld(world);
+        } else if (answer.equals("3")) {
+            System.out.println("Returning to menu.");
+        } else {
+            System.out.println("Please select a valid option.");
+            viewNextDetails(details, world);
+        }
+    }
+
+    // EFFECTS: provides the menu after viewing a story chapter
+    public void viewNextStory(PageLib story, World world) {
+        System.out.println("\nWhat would you like to do next?");
+        System.out.println("\t[1] View more chapters.");
+        System.out.println("\t[2] Go back.");
+        System.out.println("\t[3] Return to main menu.");
+        String answer = input.next();
+        if (answer.equals("1")) {
+            viewStory(story, world);
+        } else if (answer.equals("2")) {
+            viewWorld(world);
+        } else if (answer.equals("3")) {
+            System.out.println("Returning to menu.");
+        } else {
+            System.out.println("Please select a valid option.");
+            viewNextStory(story, world);
+        }
+    }
+
+    // EFFECTS: provides the menu after viewing a character
+    public void viewNextChara(CharacterLib charas, World world) {
+        System.out.println("\nWhat would you like to do next?");
+        System.out.println("\t[1] View more characters.");
+        System.out.println("\t[2] Go back.");
+        System.out.println("\t[3] Return to main menu.");
+        String answer = input.next();
+        if (answer.equals("1")) {
+            viewCharas(charas, world);
+        } else if (answer.equals("2")) {
+            viewWorld(world);
+        } else if (answer.equals("3")) {
+            System.out.println("Returning to menu.");
+        } else {
+            System.out.println("Please select a valid option.");
+            viewNextChara(charas, world);
         }
     }
 
@@ -571,7 +630,7 @@ public class StoryArchiveApp {
     }
 
     // EFFECTS: provides the menu for the viewing of existing characters
-    public void viewCharas(CharacterLib charas) {
+    public void viewCharas(CharacterLib charas, World world) {
         if (charas.isEmpty()) {
             System.out.print("You have no existing characters.");
         } else {
@@ -584,8 +643,9 @@ public class StoryArchiveApp {
             } catch (NotFoundException exc) {
                 System.out.println("There is no character found with the inputted name.");
                 System.out.println("(Hint: make sure your capitalization is correct!)");
-                viewCharas(charas);
+                viewCharas(charas, world);
             }
+            viewNextChara(charas, world);
         }
     }
 
@@ -610,7 +670,7 @@ public class StoryArchiveApp {
     }
 
     // EFFECTS: provides the menu for the viewing of existing chapters
-    public void viewStory(PageLib story) {
+    public void viewStory(PageLib story, World world) {
         if (story.isEmpty()) {
             System.out.print("You have no existing chapters.");
         } else {
@@ -623,8 +683,9 @@ public class StoryArchiveApp {
             } catch (NotFoundException exc) {
                 System.out.println("There is no chapter found with the inputted title.");
                 System.out.println("(Hint: make sure your capitalization is correct!)");
-                viewStory(story);
+                viewStory(story, world);
             }
+            viewNextStory(story, world);
         }
     }
 
@@ -632,10 +693,10 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for the editing of a page
     public void editPage(Page page) {
         System.out.println("\nHow would you like to edit " + page.getTitle() + "?");
-        System.out.println("\t1: Rename title.");
-        System.out.println("\t2: Add to text.");
-        System.out.println("\t3: Replace text.");
-        System.out.println("\t4: Return to main menu.");
+        System.out.println("\t[1] Rename title.");
+        System.out.println("\t[2] Add to text.");
+        System.out.println("\t[3] Replace text.");
+        System.out.println("\t[4] Return to main menu.");
 
         String command = input.next();
 
@@ -656,23 +717,23 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for the viewing of a page
     public void viewPage(Page page) {
         System.out.println("\n" + page.getTitle());
-        System.out.println("\t" + page.getBody());
+        System.out.println(page.getBody());
     }
 
     // EFFECTS: provides the menu for the viewing of a page
     public void viewCharacter(Character chara) {
         System.out.println("\n" + chara.getName());
-        System.out.println("\t" + chara.getDesc());
+        System.out.println(chara.getDesc());
     }
 
     // MODIFIES: chara
     // EFFECTS: provides the menu for the editing of a character
     public void editCharacter(Character chara) {
         System.out.println("\nHow would you like to edit " + chara.getName() + "?");
-        System.out.println("\t1: Rename character.");
-        System.out.println("\t2: Add to description text.");
-        System.out.println("\t3: Replace description text.");
-        System.out.println("\t4: Return to main menu.");
+        System.out.println("\t[1] Rename character.");
+        System.out.println("\t[2] Add to description text.");
+        System.out.println("\t[3] Replace description text.");
+        System.out.println("\t[4] Return to main menu.");
 
         String command = input.next();
 
