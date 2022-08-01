@@ -1,0 +1,62 @@
+{"worlds": [
+    {
+        "characters": [
+            {
+                "name": "Victor Moon",
+                "desc": "Mage"
+            },
+            {
+                "name": "Ivenna Brightheart",
+                "desc": "Craftsman"
+            }
+        ],
+        "name": "Arcaenus",
+        "details": [
+            {
+                "title": "Geography",
+                "body": "Magic Island"
+            },
+            {
+                "title": "People",
+                "body": "Mages and Craftsmen"
+            }
+        ],
+        "story": [
+            {
+                "title": "Chapter 1",
+                "body": "text"
+            },
+            {
+                "title": "Chapter 2",
+                "body": "text"
+            }
+        ]
+    },
+    {
+        "characters": [
+            {
+                "name": "Nyx",
+                "desc": "Bestie"
+            },
+            {
+                "name": "Owen",
+                "desc": "Bagel"
+            }
+        ],
+        "name": "Earth",
+        "details": [
+            {
+                "title": "Vancouver",
+                "body": "Needs more A/C"
+            },
+            {
+                "title": "Chicago",
+                "body": "Not a state?"
+            }
+        ],
+        "story": [{
+            "title": "No Story",
+            "body": "No Text"
+        }]
+    }
+]}

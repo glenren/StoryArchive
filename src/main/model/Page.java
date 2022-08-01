@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // a page of information with a title and body text
 public class Page {
     private String title;
@@ -40,4 +42,11 @@ public class Page {
         this.body = text;
     }
 
+    // EFFECTS: returns this as JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("body", body);
+        return json;
+    }
 }

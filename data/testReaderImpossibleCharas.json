@@ -1,0 +1,19 @@
+{
+  "worlds": [
+    {
+      "characters": [
+        {
+          "name": "Twin",
+          "desc": "same"
+        },
+        {
+          "name": "Twin",
+          "desc": "same"
+        }
+      ],
+      "name": "Mimic",
+      "details": [],
+      "story": []
+    }
+  ]
+}

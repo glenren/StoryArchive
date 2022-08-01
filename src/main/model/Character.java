@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // represents a character within a story world
 public class Character {
     private String name;
@@ -38,5 +40,13 @@ public class Character {
     // EFFECTS: replaces character's existing description with newDesc
     public void replaceDesc(String newDesc) {
         this.description = newDesc;
+    }
+
+    // EFFECTS: returns this as JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("desc", description);
+        return json;
     }
 }

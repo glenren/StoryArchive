@@ -2,6 +2,7 @@ package model;
 
 import exceptions.AlreadyExistsException;
 import exceptions.NotFoundException;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -97,5 +98,14 @@ public class PageLib {
             }
         }
         return list;
+    }
+
+    // EFFECTS: returns pages in pages as a JSON array
+    public JSONArray toJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Page p : pages) {
+            jsonArray.put(p.toJson());
+        }
+        return jsonArray;
     }
 }

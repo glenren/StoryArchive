@@ -1,7 +1,7 @@
 package model;
 
-import exceptions.AlreadyExistsException;
-import exceptions.NotFoundException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 // a story world
 public class World {
@@ -42,5 +42,30 @@ public class World {
     // EFFECTS: changes world name to name
     public void rename(String name) {
         this.name = name;
+    }
+
+    // EFFECTS: returns this world as a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("characters", charaToJson());
+        json.put("story", storyToJson());
+        json.put("details", detailsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns characters in this WorldLib as a JSON array
+    private JSONArray charaToJson() {
+        return characters.toJson();
+    }
+
+    // EFFECTS: returns story in this WorldLib as a JSON array
+    private JSONArray storyToJson() {
+        return story.toJson();
+    }
+
+    // EFFECTS: returns details in this WorldLib as a JSON array
+    private JSONArray detailsToJson() {
+        return details.toJson();
     }
 }

@@ -1,0 +1,19 @@
+{
+  "worlds": [
+    {
+      "characters": [],
+      "name": "Mimic",
+      "details": [
+        {
+          "title": "Mirror",
+          "body": "identical"
+        },
+        {
+          "title": "Mirror",
+          "body": "identical"
+        }
+      ],
+      "story": []
+    }
+  ]
+}

@@ -2,6 +2,8 @@ package model;
 
 import exceptions.AlreadyExistsException;
 import exceptions.NotFoundException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -97,5 +99,23 @@ public class WorldLib {
             }
         }
         return list;
+    }
+
+    // EFFECTS: returns this WorldLib as JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("worlds", worldsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns worlds in this WorldLib as a JSON array
+    private JSONArray worldsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (World w : worlds) {
+            jsonArray.put(w.toJson());
+        }
+
+        return jsonArray;
     }
 }

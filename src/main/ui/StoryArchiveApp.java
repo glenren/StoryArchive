@@ -4,17 +4,25 @@ import exceptions.AlreadyExistsException;
 import exceptions.NotFoundException;
 import model.*;
 import model.Character;
+import persistence.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Story Archive Application
 // base code credit: TellerApp
 public class StoryArchiveApp {
+    private static final String JSON_STORE = "./data/archive.json";
     private WorldLib worlds;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the Story Archive application
     public StoryArchiveApp() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runStoryArchive();
     }
 
@@ -22,7 +30,7 @@ public class StoryArchiveApp {
     // EFFECTS: processes the user's input
     private void runStoryArchive() {
         boolean keepGoing = true;
-        String command = null;
+        String command;
 
         start();
 
@@ -43,14 +51,25 @@ public class StoryArchiveApp {
     // MODIFIES: this
     // EFFECTS: processes the user's inputted command
     private void processCommand(String command) {
-        if (command.equals("1")) {
-            createNewWorld();
-        } else if (command.equals("2")) {
-            editExistingWorld();
-        } else if (command.equals("3")) {
-            viewExistingWorld();
-        } else {
-            System.out.println("Please select a valid option.");
+        switch (command) {
+            case "1":
+                createNewWorld();
+                break;
+            case "2":
+                editExistingWorld();
+                break;
+            case "3":
+                viewExistingWorld();
+                break;
+            case "4":
+                saveArchive();
+                break;
+            case "5":
+                loadArchive();
+                break;
+            default:
+                System.out.println("Please select a valid option.");
+                break;
         }
     }
 
@@ -68,6 +87,8 @@ public class StoryArchiveApp {
         System.out.println("\t[1] Create a new world.");
         System.out.println("\t[2] Edit an existing world.");
         System.out.println("\t[3] View an existing world.");
+        System.out.println("\t[4] Save this Archive to file.");
+        System.out.println("\t[5] Load an Archive from file.");
         System.out.println("\t[Q] Quit.");
     }
 
@@ -559,15 +580,20 @@ public class StoryArchiveApp {
         System.out.println("\t[2] Go back.");
         System.out.println("\t[3] Return to main menu.");
         String answer = input.next();
-        if (answer.equals("1")) {
-            viewDetails(details, world);
-        } else if (answer.equals("2")) {
-            viewWorld(world);
-        } else if (answer.equals("3")) {
-            System.out.println("Returning to menu.");
-        } else {
-            System.out.println("Please select a valid option.");
-            viewNextDetails(details, world);
+        switch (answer) {
+            case "1":
+                viewDetails(details, world);
+                break;
+            case "2":
+                viewWorld(world);
+                break;
+            case "3":
+                System.out.println("Returning to menu.");
+                break;
+            default:
+                System.out.println("Please select a valid option.");
+                viewNextDetails(details, world);
+                break;
         }
     }
 
@@ -578,15 +604,20 @@ public class StoryArchiveApp {
         System.out.println("\t[2] Go back.");
         System.out.println("\t[3] Return to main menu.");
         String answer = input.next();
-        if (answer.equals("1")) {
-            viewStory(story, world);
-        } else if (answer.equals("2")) {
-            viewWorld(world);
-        } else if (answer.equals("3")) {
-            System.out.println("Returning to menu.");
-        } else {
-            System.out.println("Please select a valid option.");
-            viewNextStory(story, world);
+        switch (answer) {
+            case "1":
+                viewStory(story, world);
+                break;
+            case "2":
+                viewWorld(world);
+                break;
+            case "3":
+                System.out.println("Returning to menu.");
+                break;
+            default:
+                System.out.println("Please select a valid option.");
+                viewNextStory(story, world);
+                break;
         }
     }
 
@@ -597,15 +628,20 @@ public class StoryArchiveApp {
         System.out.println("\t[2] Go back.");
         System.out.println("\t[3] Return to main menu.");
         String answer = input.next();
-        if (answer.equals("1")) {
-            viewCharas(charas, world);
-        } else if (answer.equals("2")) {
-            viewWorld(world);
-        } else if (answer.equals("3")) {
-            System.out.println("Returning to menu.");
-        } else {
-            System.out.println("Please select a valid option.");
-            viewNextChara(charas, world);
+        switch (answer) {
+            case "1":
+                viewCharas(charas, world);
+                break;
+            case "2":
+                viewWorld(world);
+                break;
+            case "3":
+                System.out.println("Returning to menu.");
+                break;
+            default:
+                System.out.println("Please select a valid option.");
+                viewNextChara(charas, world);
+                break;
         }
     }
 
@@ -748,6 +784,29 @@ public class StoryArchiveApp {
         } else {
             System.out.println("Please select a valid option.");
             editCharacter(chara);
+        }
+    }
+
+    // EFFECTS: saves the current archive to file
+    private void saveArchive() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(worlds);
+            jsonWriter.close();
+            System.out.println("Saved current Story Archive to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads archive from file
+    private void loadArchive() {
+        try {
+            worlds = jsonReader.read();
+            System.out.println("Loaded up Story Archive from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }

@@ -1,0 +1,33 @@
+{"worlds": [{
+    "characters": [
+        {
+            "name": "Victor Moon",
+            "desc": "Mage"
+        },
+        {
+            "name": "Ivenna Brightheart",
+            "desc": "Craftsman"
+        }
+    ],
+    "name": "Arcaenus",
+    "details": [
+        {
+            "title": "Geography",
+            "body": "Magic Island"
+        },
+        {
+            "title": "People",
+            "body": "Mages and Craftsmen"
+        }
+    ],
+    "story": [
+        {
+            "title": "Chapter 1",
+            "body": "text"
+        },
+        {
+            "title": "Chapter 2",
+            "body": "text"
+        }
+    ]
+}]}

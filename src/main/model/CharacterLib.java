@@ -2,6 +2,7 @@ package model;
 
 import exceptions.AlreadyExistsException;
 import exceptions.NotFoundException;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -96,5 +97,14 @@ public class CharacterLib {
             }
         }
         return list;
+    }
+
+    // EFFECTS: returns characters in charas as a JSON array
+    public JSONArray toJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Character c : charas) {
+            jsonArray.put(c.toJson());
+        }
+        return jsonArray;
     }
 }
