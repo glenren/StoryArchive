@@ -48,12 +48,13 @@ public class WorldLib {
 
     // EFFECTS: searches world library for a matching world name to name and returns it
     public World getWorld(String name) throws NotFoundException {
+        name = name.toLowerCase();
         if (!isWorldInLib(name)) {
             throw new NotFoundException();
         } else {
             World found = new World("No");
             for (World world : worlds) {
-                if (world.getName().equals(name)) {
+                if (world.getName().toLowerCase().equals(name)) {
                     found = world;
                 }
             }
@@ -64,13 +65,14 @@ public class WorldLib {
     // EFFECTS: searches world library for a matching world name to name
     //          and returns true if it exists, false otherwise
     public boolean isWorldInLib(String name) {
-        World found = new World("No");
+        name = name.toLowerCase();
+        Boolean found = false;
         for (World world : worlds) {
-            if (world.getName().equals(name)) {
-                found = world;
+            if (world.getName().toLowerCase().equals(name)) {
+                found = true;
             }
         }
-        return found.getName().equals(name);
+        return found;
     }
 
     // EFFECTS: returns the amount of worlds currently in the world library

@@ -47,12 +47,13 @@ public class PageLib {
 
     // EFFECTS: searches pages for a page with matching title to title and returns it
     public Page getPage(String title) throws NotFoundException {
+        title = title.toLowerCase();
         if (!isPageInLib(title)) {
             throw new NotFoundException();
         } else {
             Page found = new Page("No", "No");
             for (Page page : pages) {
-                if (page.getTitle().equals(title)) {
+                if (page.getTitle().toLowerCase().equals(title)) {
                     found = page;
                 }
             }
@@ -63,13 +64,14 @@ public class PageLib {
     // EFFECTS: searches pages for a page with matching title to title
     //          and returns true if it exists, false otherwise
     public boolean isPageInLib(String title) {
-        Page found = new Page("No", "No");
+        title = title.toLowerCase();
+        Boolean found = false;
         for (Page page : pages) {
-            if (page.getTitle().equals(title)) {
-                found = page;
+            if (page.getTitle().toLowerCase().equals(title)) {
+                found = true;
             }
         }
-        return found.getTitle().equals(title);
+        return found;
     }
 
     // EFFECTS: returns the amount of pages currently in the page library

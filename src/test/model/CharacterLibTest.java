@@ -42,7 +42,7 @@ public class CharacterLibTest {
     @Test
     public void testOneChara() {
         try {
-            assertTrue(charas.addCharas(c1));
+            assertTrue(charas.addChara(c1));
         } catch (AlreadyExistsException aE) {
             fail();
         }
@@ -83,8 +83,8 @@ public class CharacterLibTest {
     @Test
     public void testTwoCharas() {
         try {
-            assertTrue(charas.addCharas(c1));
-            assertTrue(charas.addCharas(c2));
+            assertTrue(charas.addChara(c1));
+            assertTrue(charas.addChara(c2));
         } catch (AlreadyExistsException aE) {
             fail();
         }
@@ -162,9 +162,9 @@ public class CharacterLibTest {
     @Test
     public void testThreeCharas() {
         try {
-            assertTrue(charas.addCharas(c1));
-            assertTrue(charas.addCharas(c2));
-            assertTrue(charas.addCharas(c3));
+            assertTrue(charas.addChara(c1));
+            assertTrue(charas.addChara(c2));
+            assertTrue(charas.addChara(c3));
         } catch (AlreadyExistsException aE) {
             fail();
         }
@@ -262,9 +262,9 @@ public class CharacterLibTest {
     @Test
     public void testThreeCharasDiffOrder() {
         try {
-            assertTrue(charas.addCharas(c2));
-            assertTrue(charas.addCharas(c3));
-            assertTrue(charas.addCharas(c1));
+            assertTrue(charas.addChara(c2));
+            assertTrue(charas.addChara(c3));
+            assertTrue(charas.addChara(c1));
         } catch (AlreadyExistsException aE) {
             fail();
         }
@@ -366,17 +366,17 @@ public class CharacterLibTest {
     @Test
     public void testSameChara() {
         try {
-            assertTrue(charas.addCharas(c1));
+            assertTrue(charas.addChara(c1));
         } catch (AlreadyExistsException aE) {
             fail();
         }
         try {
-            charas.addCharas(c1);
+            charas.addChara(c1);
             fail();
         } catch (AlreadyExistsException aE) {
         }
         try {
-            charas.addCharas(c1);
+            charas.addChara(c1);
             fail();
         } catch (AlreadyExistsException aE) {
         }
@@ -393,17 +393,17 @@ public class CharacterLibTest {
         assertEquals(charas.getCharaList(), "c1");
 
         try {
-            assertTrue(charas.addCharas(c2));
+            assertTrue(charas.addChara(c2));
         } catch (AlreadyExistsException aE) {
             fail();
         }
         try {
-            charas.addCharas(c2);
+            charas.addChara(c2);
             fail();
         } catch (AlreadyExistsException aE) {
         }
         try {
-            charas.addCharas(c1);
+            charas.addChara(c1);
             fail();
         } catch (AlreadyExistsException aE) {
         }
@@ -433,16 +433,16 @@ public class CharacterLibTest {
         Character c11 = new Character("c11", "d11");
 
         try {
-            assertTrue(charas.addCharas(c1));
-            assertTrue(charas.addCharas(c2));
-            assertTrue(charas.addCharas(c3));
-            assertTrue(charas.addCharas(c4));
-            assertTrue(charas.addCharas(c5));
-            assertTrue(charas.addCharas(c6));
-            assertTrue(charas.addCharas(c7));
-            assertTrue(charas.addCharas(c8));
-            assertTrue(charas.addCharas(c9));
-            assertTrue(charas.addCharas(c10));
+            assertTrue(charas.addChara(c1));
+            assertTrue(charas.addChara(c2));
+            assertTrue(charas.addChara(c3));
+            assertTrue(charas.addChara(c4));
+            assertTrue(charas.addChara(c5));
+            assertTrue(charas.addChara(c6));
+            assertTrue(charas.addChara(c7));
+            assertTrue(charas.addChara(c8));
+            assertTrue(charas.addChara(c9));
+            assertTrue(charas.addChara(c10));
         } catch (AlreadyExistsException aE) {
             fail();
         }
@@ -477,7 +477,7 @@ public class CharacterLibTest {
         }
 
         try {
-            assertFalse(charas.addCharas(c11));
+            assertFalse(charas.addChara(c11));
         } catch (AlreadyExistsException aE) {
             fail();
         }
@@ -524,7 +524,7 @@ public class CharacterLibTest {
         }
 
         try {
-            assertTrue(charas.addCharas(c11));
+            assertTrue(charas.addChara(c11));
         } catch (AlreadyExistsException aE) {
             fail();
         }
@@ -563,5 +563,60 @@ public class CharacterLibTest {
             fail();
         } catch (NotFoundException nfe) {
         }
+    }
+
+    @Test
+    void testCaseInsensitive() {
+        charas = new CharacterLib();
+        c1 = new Character("Ahhh", "d1");
+        c2 = new Character("AHHH", "d2");
+        c3 = new Character("ahhh", "d3");
+
+        try {
+            assertTrue(charas.addChara(c1));
+        } catch (AlreadyExistsException aE) {
+            fail();
+        }
+
+        assertTrue(charas.isCharaInLib("Ahhh"));
+        assertTrue(charas.isCharaInLib("AHHH"));
+        assertTrue(charas.isCharaInLib("ahhh"));
+        assertTrue(charas.isCharaInLib("aHhH"));
+
+        assertFalse(charas.isCharaInLib("a h h h"));
+        assertFalse(charas.isCharaInLib("Ahh"));
+        assertFalse(charas.isCharaInLib("Ahhhh"));
+
+        try {
+            assertEquals(charas.getChara("Ahhh"), c1);
+            assertEquals(charas.getChara("AHHH"), c1);
+            assertEquals(charas.getChara("ahhh"), c1);
+            assertEquals(charas.getChara("aHhH"), c1);
+        } catch (NotFoundException nF) {
+            fail();
+        }
+        assertEquals(charas.getCharaList(), "Ahhh");
+
+        try {
+            charas.addChara(c2);
+            fail();
+        } catch (AlreadyExistsException aE) {
+        }
+
+        try {
+            charas.addChara(c3);
+            fail();
+        } catch (AlreadyExistsException aE) {
+        }
+
+        assertEquals(charas.getCharaList(), "Ahhh");
+
+        try {
+            charas.removeChara("ahhh");
+        } catch (NotFoundException nF) {
+            fail();
+        }
+
+        assertEquals(charas.getCharaList(), "");
     }
 }

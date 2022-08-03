@@ -160,7 +160,7 @@ public class PageLibTest {
     }
 
     @Test
-    public void testThreeCharas() {
+    public void testThreePages() {
         try {
             assertTrue(pages.addPage(p1));
             assertTrue(pages.addPage(p2));
@@ -260,7 +260,7 @@ public class PageLibTest {
     }
 
     @Test
-    public void testThreeCharasDiffOrder() {
+    public void testThreePagesDiffOrder() {
         try {
             assertTrue(pages.addPage(p2));
             assertTrue(pages.addPage(p3));
@@ -364,7 +364,7 @@ public class PageLibTest {
     }
 
     @Test
-    public void testSameChara() {
+    public void testSamePage() {
         try {
             assertTrue(pages.addPage(p1));
         } catch (AlreadyExistsException aE) {
@@ -563,5 +563,60 @@ public class PageLibTest {
             fail();
         } catch (NotFoundException nfe) {
         }
+    }
+
+    @Test
+    void testCaseInsensitive() {
+        pages = new PageLib();
+        p1 = new Page("Ahhh", "p1");
+        p2 = new Page("AHHH", "p2");
+        p3 = new Page("ahhh", "p3");
+
+        try {
+            assertTrue(pages.addPage(p1));
+        } catch (AlreadyExistsException aE) {
+            fail();
+        }
+
+        assertTrue(pages.isPageInLib("Ahhh"));
+        assertTrue(pages.isPageInLib("AHHH"));
+        assertTrue(pages.isPageInLib("ahhh"));
+        assertTrue(pages.isPageInLib("aHhH"));
+
+        assertFalse(pages.isPageInLib("a h h h"));
+        assertFalse(pages.isPageInLib("Ahh"));
+        assertFalse(pages.isPageInLib("Ahhhh"));
+
+        try {
+            assertEquals(pages.getPage("Ahhh"), p1);
+            assertEquals(pages.getPage("AHHH"), p1);
+            assertEquals(pages.getPage("ahhh"), p1);
+            assertEquals(pages.getPage("aHhH"), p1);
+        } catch (NotFoundException nF) {
+            fail();
+        }
+        assertEquals(pages.getPageList(), "Ahhh");
+
+        try {
+            pages.addPage(p2);
+            fail();
+        } catch (AlreadyExistsException aE) {
+        }
+
+        try {
+            pages.addPage(p3);
+            fail();
+        } catch (AlreadyExistsException aE) {
+        }
+
+        assertEquals(pages.getPageList(), "Ahhh");
+
+        try {
+            pages.removePage("ahhh");
+        } catch (NotFoundException nF) {
+            fail();
+        }
+
+        assertEquals(pages.getPageList(), "");
     }
 }

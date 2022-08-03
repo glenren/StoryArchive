@@ -1,28 +1,24 @@
-{
-  "worlds": [
-    {
-      "characters": [
+{"worlds": [{
+    "characters": [
         {
-          "name": "Victor Moon",
-          "desc": "Son of two skilled craftsmen, he is branching off from his family trade to study magic."
+            "name": "Victor Moon",
+            "desc": "Son of two skilled craftsmen, he is branching off from his family trade to study magic."
         },
         {
-          "name": "Ivenna Brightheart",
-          "desc": "Daughter of a prestigious mage lineage (the Brighthearts), she has been outcast from the family after revealing that she has no magical ability."
+            "name": "Ivenna Brightheart",
+            "desc": "Daughter of a prestigious mage lineage (the Brighthearts), she has been outcast from the family after revealing that she has no magical ability."
         }
-      ],
-      "name": "Arcaenus",
-      "details": [
+    ],
+    "name": "Arcaenus",
+    "details": [
         {
-          "title": "Geography",
-          "body": "Arcaenus is a magical floating island in the sky with magical rocks that keep it up. These rocks, called Arcana Crystals, hold many mysterious properties."
+            "title": "Geography",
+            "body": "Arcaenus is a magical floating island in the sky with magical rocks that keep it up. These rocks, called Arcana Crystals, hold many mysterious properties."
         },
         {
-          "title": "People",
-          "body": "Arcaena is home to many mages (those who have the ability to channel the magic of Arcana Crystals) and craftsmen (those who craft advanced technology using Arcana Crystals)."
+            "title": "People",
+            "body": "Arcaena is home to many mages (those who have the ability to channel the magic of Arcana Crystals) and craftsmen (those who craft advanced technology using Arcana Crystals)."
         }
-      ],
-      "story": []
-    }
-  ]
-}
+    ],
+    "story": []
+}]}

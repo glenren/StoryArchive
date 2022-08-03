@@ -107,7 +107,7 @@ public class JsonReader {
         String desc = charaObj.getString("desc");
         Character chara = new Character(name, desc);
         try {
-            charas.addCharas(chara);
+            charas.addChara(chara);
         } catch (AlreadyExistsException e) {
             throw new RuntimeException(e);
         }

@@ -19,7 +19,7 @@ public class CharacterLib {
 
     // MODIFIES: this
     // EFFECTS: add a character to charas if charas isn't full and return true, false if full
-    public boolean addCharas(Character newChara) throws AlreadyExistsException {
+    public boolean addChara(Character newChara) throws AlreadyExistsException {
         if (isCharaInLib(newChara.getName())) {
             throw new AlreadyExistsException();
         } else {
@@ -46,12 +46,13 @@ public class CharacterLib {
 
     // EFFECTS: searches character library for a character with matching name to name and returns it
     public Character getChara(String name) throws NotFoundException {
+        name = name.toLowerCase();
         if (!isCharaInLib(name)) {
             throw new NotFoundException();
         } else {
             Character found = new Character("No", "No");
             for (Character chara : charas) {
-                if (chara.getName().equals(name)) {
+                if (chara.getName().toLowerCase().equals(name)) {
                     found = chara;
                 }
             }
@@ -62,13 +63,14 @@ public class CharacterLib {
     // EFFECTS: searches character library for a character with matching name to name
     //          and returns true if it exists, false otherwise
     public boolean isCharaInLib(String name) {
-        Character found = new Character("No", "No");
+        name = name.toLowerCase();
+        Boolean found = false;
         for (Character chara : charas) {
-            if (chara.getName().equals(name)) {
-                found = chara;
+            if (chara.getName().toLowerCase().equals(name)) {
+                found = true;
             }
         }
-        return found.getName().equals(name);
+        return found;
     }
 
     // EFFECTS: returns the amount of characters currently in the character library

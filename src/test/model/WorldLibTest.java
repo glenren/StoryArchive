@@ -564,4 +564,59 @@ public class WorldLibTest {
         } catch (NotFoundException nfe) {
         }
     }
+
+    @Test
+    void testCaseInsensitive() {
+        worlds = new WorldLib();
+        w1 = new World("Ahhh");
+        w2 = new World("AHHH");
+        w3 = new World("ahhh");
+
+        try {
+            assertTrue(worlds.addWorld(w1));
+        } catch (AlreadyExistsException aE) {
+            fail();
+        }
+
+        assertTrue(worlds.isWorldInLib("Ahhh"));
+        assertTrue(worlds.isWorldInLib("AHHH"));
+        assertTrue(worlds.isWorldInLib("ahhh"));
+        assertTrue(worlds.isWorldInLib("aHhH"));
+
+        assertFalse(worlds.isWorldInLib("a h h h"));
+        assertFalse(worlds.isWorldInLib("Ahh"));
+        assertFalse(worlds.isWorldInLib("Ahhhh"));
+
+        try {
+            assertEquals(worlds.getWorld("Ahhh"), w1);
+            assertEquals(worlds.getWorld("AHHH"), w1);
+            assertEquals(worlds.getWorld("ahhh"), w1);
+            assertEquals(worlds.getWorld("aHhH"), w1);
+        } catch (NotFoundException nF) {
+            fail();
+        }
+        assertEquals(worlds.getWorldList(), "Ahhh");
+
+        try {
+            worlds.addWorld(w2);
+            fail();
+        } catch (AlreadyExistsException aE) {
+        }
+
+        try {
+            worlds.addWorld(w3);
+            fail();
+        } catch (AlreadyExistsException aE) {
+        }
+
+        assertEquals(worlds.getWorldList(), "Ahhh");
+
+        try {
+            worlds.removeWorld("ahhh");
+        } catch (NotFoundException nF) {
+            fail();
+        }
+
+        assertEquals(worlds.getWorldList(), "");
+    }
 }

@@ -61,8 +61,8 @@ class JsonWriterTest {
                 worlds.addWorld(arcaenus);
                 arcaenusDetails.addPage(geography);
                 arcaenusDetails.addPage(people);
-                arcaenusCharas.addCharas(victorMoon);
-                arcaenusCharas.addCharas(ivennaBrightheart);
+                arcaenusCharas.addChara(victorMoon);
+                arcaenusCharas.addChara(ivennaBrightheart);
                 arcaenusStory.addPage(chap1);
                 arcaenusStory.addPage(chap2);
             } catch (AlreadyExistsException alreadyExistsException) {
@@ -110,8 +110,8 @@ class JsonWriterTest {
                 worlds.addWorld(arcaenus);
                 arcaenusDetails.addPage(geography);
                 arcaenusDetails.addPage(people);
-                arcaenusCharas.addCharas(victorMoon);
-                arcaenusCharas.addCharas(ivennaBrightheart);
+                arcaenusCharas.addChara(victorMoon);
+                arcaenusCharas.addChara(ivennaBrightheart);
                 arcaenusStory.addPage(chap1);
                 arcaenusStory.addPage(chap2);
             } catch (AlreadyExistsException alreadyExistsException) {
@@ -131,8 +131,8 @@ class JsonWriterTest {
                 worlds.addWorld(earth);
                 earthDetails.addPage(vancouver);
                 earthDetails.addPage(chicago);
-                earthCharas.addCharas(nyx);
-                earthCharas.addCharas(owen);
+                earthCharas.addChara(nyx);
+                earthCharas.addChara(owen);
                 earthStory.addPage(noStory);
             } catch (AlreadyExistsException alreadyExistsException) {
                 fail("Exception should not have been thrown");
