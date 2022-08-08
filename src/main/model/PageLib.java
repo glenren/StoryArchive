@@ -102,6 +102,15 @@ public class PageLib {
         return list;
     }
 
+    // EFFECTS: produces an arraylist of all the pages in page library
+    public ArrayList<Page> getPageArrayList() {
+        ArrayList<Page> pages = new ArrayList<>();
+        for (Page p : this.pages) {
+            pages.add(p);
+        }
+        return pages;
+    }
+
     // EFFECTS: returns pages in pages as a JSON array
     public JSONArray toJson() {
         JSONArray jsonArray = new JSONArray();

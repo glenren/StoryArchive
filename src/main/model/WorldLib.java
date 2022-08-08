@@ -103,6 +103,15 @@ public class WorldLib {
         return list;
     }
 
+    // EFFECTS: produces an arraylist of all the worlds in world library
+    public ArrayList<World> getWorldArrayList() {
+        ArrayList<World> worlds = new ArrayList<>();
+        for (World w : this.worlds) {
+            worlds.add(w);
+        }
+        return worlds;
+    }
+
     // EFFECTS: returns this WorldLib as JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -101,6 +101,15 @@ public class CharacterLib {
         return list;
     }
 
+    // EFFECTS: produces an arraylist of all the characters in character library
+    public ArrayList<Character> getCharaArrayList() {
+        ArrayList<Character> characters = new ArrayList<>();
+        for (Character chara : charas) {
+            characters.add(chara);
+        }
+        return characters;
+    }
+
     // EFFECTS: returns characters in charas as a JSON array
     public JSONArray toJson() {
         JSONArray jsonArray = new JSONArray();
