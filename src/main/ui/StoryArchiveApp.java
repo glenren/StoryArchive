@@ -21,51 +21,88 @@ public class StoryArchiveApp {
     JFrame frame;
     JPanel panel;
     JLabel label;
+    JPanel topPanel;
 
-    // EFFECTS: runs the Story Archive application
+    // EFFECTS: initiates the Story Archive application
     public StoryArchiveApp() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         worlds = new WorldLib();
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(1080, 750));
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        frame.setTitle("Story Archive");
+        initiateFrame();
+        topPanel = new JPanel();
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
+        topPanel.setLayout(new GridLayout(2, 1));
+        addToFrame(topPanel, BorderLayout.NORTH);
+        ImageIcon myIcon = new ImageIcon("./data/StoryArchive.png");
+        Image img = myIcon.getImage().getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH);
+        myIcon = new ImageIcon(img);
+        JLabel icon = new JLabel();
+        icon.setIcon(myIcon);
+        topPanel.add(icon);
         label = new JLabel();
-        frame.add(label, BorderLayout.NORTH);
+        topPanel.add(label);
+        topPanel.setVisible(true);
         panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
         panel.setLayout(new GridLayout(8, 1));
         panel.setVisible(true);
-        frame.add(panel);
+        addToFrame(panel);
         openingMenu();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initiates the frame
+    private void initiateFrame() {
+        frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(800, 600));
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        frame.setTitle("Story Archive");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds component to the frame
+    private void addToFrame(Component c) {
+        frame.add(c);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds component to the frame at constraint
+    private void addToFrame(Component c, Object constraints) {
+        frame.add(c, constraints);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the text of this.label to given text
     private void newLabel(String text) {
         this.label.setText(text);
     }
 
+    // MODIFIES: this
+    // EFFECTS: deletes all components from this.panel
     private void resetPanel() {
         panel.removeAll();
         panel.updateUI();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initiates the opening menu
     private void openingMenu() {
         resetPanel();
         newLabel("Welcome to Story Archive!");
-//        ImageIcon myIcon = new ImageIcon("./data/StoryArchive.png");
-//        Image img = myIcon.getImage().getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH);
-//        myIcon = new ImageIcon(img);
-//        JLabel icon = new JLabel();
-//        icon.setIcon(myIcon);
-//        frame.add(icon, BorderLayout.SOUTH);
         JButton load = printButton("Load an Archive from file");
         load.addActionListener(e -> loadArchive());
         JButton skip = printButton("Skip");
         skip.addActionListener(e -> mainMenu());
+        frame.pack();
+        frame.setVisible(true);
+        panel.setVisible(true);
     }
 
     // MODIFIES: this
@@ -95,17 +132,19 @@ public class StoryArchiveApp {
         load.addActionListener(e -> loadArchive());
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds the return to main menu button to panel
     private void returnMenuButton() {
         JButton menu = printButton("Return to Main Menu");
         menu.addActionListener(e -> mainMenu());
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a return to world view menu button and adds to panel
     private void worldViewButton(World world) {
         JButton worldView = printButton("Go back to world viewing menu");
         worldView.addActionListener(e -> viewWorld(world));
     }
-
-// ------------ below here are the text formatting helper methods ------------
 
     // MODIFIES: this
     // EFFECTS: creates a button with given text and adds it to panel
@@ -171,7 +210,8 @@ public class StoryArchiveApp {
         button.addActionListener(e -> viewCharacter(charas, chara, world));
     }
 
-    // EFFECTS: provides the full text
+    // MODIFIES: this
+    // EFFECTS: provides action for when capacity has been reached
     private void full(String things) {
         newLabel("You have reached the maximum amount of " + things + ".");
         resetPanel();
@@ -182,9 +222,9 @@ public class StoryArchiveApp {
     private void already(String thing) {
         resetPanel();
         if (thing.equals("world") || thing.equals("character")) {
-            newLabel("There is already a " + thing + "with this name.");
+            newLabel("There is already a " + thing + " with this name.");
         } else {
-            newLabel("There is already a " + thing + "with this title.");
+            newLabel("There is already a " + thing + " with this title.");
         }
     }
 
@@ -211,7 +251,7 @@ public class StoryArchiveApp {
         }
     }
 
-    // EFFECTS: provides the creation confirmation menu
+    // EFFECTS: provides the creation confirmation text
     private String createNew(String thing, String name) {
         if (thing.equals("character") || thing.equals("world")) {
             return "Create a new " + thing + " named " + name + "?";
@@ -220,7 +260,7 @@ public class StoryArchiveApp {
         }
     }
 
-    // EFFECTS: provides the editing menu
+    // EFFECTS: provides the editing menu text
     private String partOfLibMenu(String worldName, String thing) {
         if (thing.equals("character")) {
             return "How would you like to edit " + worldName + "'s characters?";
@@ -233,6 +273,7 @@ public class StoryArchiveApp {
 
 // ------------ below here are the action methods ------------
 
+    // MODIFIES: this
     // EFFECTS: checks if new world is full, and if isn't then sends it to creating a new world with given name
     private void createNewWorld() {
         resetPanel();
@@ -263,13 +304,15 @@ public class StoryArchiveApp {
                 editWorld(newWorld);
             } catch (AlreadyExistsException exc) {
                 already("world");
-                createNewWorld();
+                JButton ok = printButton("Ok");
+                ok.addActionListener(event -> createNewWorld());
             }
         });
         JButton goBack = printButton("Go back");
         goBack.addActionListener(e -> createNewWorld());
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu of existing worlds for user to select and edit
     private void editExistingWorld() {
         resetPanel();
@@ -296,6 +339,7 @@ public class StoryArchiveApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the world editing menu for a specific world
     private void editWorld(World world) {
         resetPanel();
@@ -320,6 +364,7 @@ public class StoryArchiveApp {
         returnMenuButton();
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the world renaming menu for a specific world
     private void renameWorld(World world) {
         resetPanel();
@@ -332,6 +377,7 @@ public class StoryArchiveApp {
         });
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the world renaming menu for a specific world
     private void renamedWorld(World world, String name) {
         resetPanel();
@@ -346,6 +392,7 @@ public class StoryArchiveApp {
         goBack.addActionListener(e -> renameWorld(world));
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the world removing menu for a specific world
     private void removeWorld(World world) {
         resetPanel();
@@ -365,6 +412,7 @@ public class StoryArchiveApp {
         goBack.addActionListener(e -> editWorld(world));
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the world viewing menu for a specific world
     private void viewWorld(World world) {
         resetPanel();
@@ -383,6 +431,7 @@ public class StoryArchiveApp {
         returnMenuButton();
     }
 
+    // MODIFIES: this
     // EFFECTS: provides a world details library editing menu
     private void editDetails(PageLib details, World world) {
         resetPanel();
@@ -400,6 +449,7 @@ public class StoryArchiveApp {
         returnMenuButton();
     }
 
+    // MODIFIES: this
     // EFFECTS: provides a character library editing menu
     private void editCharas(CharacterLib charas, World world) {
         resetPanel();
@@ -417,6 +467,7 @@ public class StoryArchiveApp {
         returnMenuButton();
     }
 
+    // MODIFIES: this
     // EFFECTS: provides a story editing menu
     private void editStory(PageLib story, World world) {
         resetPanel();
@@ -434,6 +485,7 @@ public class StoryArchiveApp {
         returnMenuButton();
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu for the creation of a new details page
     private void createNewDetailsPage(PageLib details) {
         resetPanel();
@@ -464,13 +516,15 @@ public class StoryArchiveApp {
                 replaceDescription(newDetail);
             } catch (AlreadyExistsException exc) {
                 already("page");
-                createNewDetailsPage(details);
+                JButton ok = printButton("Ok");
+                ok.addActionListener(event -> createNewDetailsPage(details));
             }
         });
         JButton goBack = printButton("Go back");
         goBack.addActionListener(e -> createNewDetailsPage(details));
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu for the creation of a new chapter
     private void createNewStoryChapter(PageLib story) {
         resetPanel();
@@ -487,7 +541,7 @@ public class StoryArchiveApp {
         }
     }
 
-    // MODIFIES: story
+    // MODIFIES: this, story
     // EFFECTS: provides the menu for the creation of a new chapter
     private void createNewStoryChapter(PageLib story, String name) {
         resetPanel();
@@ -501,13 +555,15 @@ public class StoryArchiveApp {
                 replaceDescription(newChapter);
             } catch (AlreadyExistsException exc) {
                 already("chapter");
-                createNewDetailsPage(story);
+                JButton ok = printButton("Ok");
+                ok.addActionListener(event -> createNewDetailsPage(story));
             }
         });
         JButton goBack = printButton("Go back");
         goBack.addActionListener(e -> createNewStoryChapter(story));
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu for the creation of a new character
     private void createNewCharacter(CharacterLib charas) {
         resetPanel();
@@ -524,7 +580,7 @@ public class StoryArchiveApp {
         }
     }
 
-    // MODIFIES: charas
+    // MODIFIES: this, charas
     // EFFECTS: provides the menu for the creation of a new character
     private void createNewCharacter(CharacterLib charas, String name) {
         resetPanel();
@@ -538,14 +594,15 @@ public class StoryArchiveApp {
                 replaceDescription(newChara);
             } catch (AlreadyExistsException exc) {
                 already("character");
-                createNewCharacter(charas);
+                JButton ok = printButton("Ok");
+                ok.addActionListener(event -> createNewCharacter(charas));
             }
         });
         JButton goBack = printButton("Go back");
         goBack.addActionListener(e -> createNewCharacter(charas));
     }
 
-    // MODIFIES: page
+    // MODIFIES: this, page
     // EFFECTS: provides the menu for adding to a page's description
     private void addDescription(Page page) {
         resetPanel();
@@ -555,7 +612,7 @@ public class StoryArchiveApp {
         textField.addActionListener(e -> addedDescription(page, textField.getText()));
     }
 
-    // MODIFIES: chara
+    // MODIFIES: this, chara
     // EFFECTS: provides the menu for adding to a character's description
     private void addDescription(Character chara) {
         resetPanel();
@@ -565,6 +622,8 @@ public class StoryArchiveApp {
         textField.addActionListener(e -> addedDescription(chara, textField.getText()));
     }
 
+    // MODIFIES: this, page
+    // EFFECTS: provides the menu for adding to a page's description once text was submitted
     private void addedDescription(Page page, String text) {
         resetPanel();
         newLabel("Confirm your submission: " + " " + page.getBody() + " " + text);
@@ -580,6 +639,8 @@ public class StoryArchiveApp {
         goBack.addActionListener(e -> addDescription(page));
     }
 
+    // MODIFIES: this, chara
+    // EFFECTS: provides the menu for adding to a chara's description once text was submitted
     private void addedDescription(Character chara, String text) {
         resetPanel();
         newLabel("Confirm your submission: " + " " + chara.getDesc() + " " + text);
@@ -595,7 +656,7 @@ public class StoryArchiveApp {
         goBack.addActionListener(e -> addDescription(chara));
     }
 
-    // MODIFIES: page
+    // MODIFIES: this, page
     // EFFECTS: provides the menu for changing a page's description
     private void replaceDescription(Page page) {
         resetPanel();
@@ -605,7 +666,7 @@ public class StoryArchiveApp {
         textField.addActionListener(e -> replacedDescription(page, textField.getText()));
     }
 
-    // MODIFIES: chara
+    // MODIFIES: this, chara
     // EFFECTS: provides the menu for changing a character's description
     private void replaceDescription(Character chara) {
         resetPanel();
@@ -615,6 +676,8 @@ public class StoryArchiveApp {
         textField.addActionListener(e -> replacedDescription(chara, textField.getText()));
     }
 
+    // MODIFIES: this, page
+    // EFFECTS: provides the menu for replacing a page's description once text was submitted
     private void replacedDescription(Page page, String text) {
         resetPanel();
         newLabel("Confirm your submission: " + " " + text);
@@ -630,6 +693,8 @@ public class StoryArchiveApp {
         goBack.addActionListener(e -> replaceDescription(page));
     }
 
+    // MODIFIES: this, chara
+    // EFFECTS: provides the menu for replacing a chara's description once text was submitted
     private void replacedDescription(Character chara, String text) {
         resetPanel();
         newLabel("Confirm your submission: " + text);
@@ -645,7 +710,7 @@ public class StoryArchiveApp {
         goBack.addActionListener(e -> replaceDescription(chara));
     }
 
-    // MODIFIES: page
+    // MODIFIES: this
     // EFFECTS: provides the menu for changing a page's title
     private void renamePage(Page page) {
         resetPanel();
@@ -658,6 +723,7 @@ public class StoryArchiveApp {
         });
     }
 
+    // MODIFIES: this, page
     // EFFECTS: provides the page renaming menu for a specific page
     private void renamedPage(Page page, String text) {
         resetPanel();
@@ -672,7 +738,7 @@ public class StoryArchiveApp {
         goBack.addActionListener(e -> renamePage(page));
     }
 
-    // MODIFIES: chara
+    // MODIFIES: this
     // EFFECTS: provides the menu for changing a character's name
     private void renameCharacter(Character chara) {
         resetPanel();
@@ -685,6 +751,7 @@ public class StoryArchiveApp {
         });
     }
 
+    // MODIFIES: this, chara
     // EFFECTS: provides the character renaming menu for a specific character
     private void renamedChara(Character chara, String text) {
         resetPanel();
@@ -713,7 +780,7 @@ public class StoryArchiveApp {
         }
     }
 
-
+    // MODIFIES: this
     // EFFECTS: provides the menu for the viewing of existing detail pages
     private void viewDetails(PageLib details, World world) {
         resetPanel();
@@ -727,6 +794,7 @@ public class StoryArchiveApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu after viewing a detail
     private void viewNextDetails(PageLib details, World world) {
         resetPanel();
@@ -739,6 +807,7 @@ public class StoryArchiveApp {
         returnMenuButton();
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu after viewing a story chapter
     private void viewNextStory(PageLib story, World world) {
         resetPanel();
@@ -752,6 +821,7 @@ public class StoryArchiveApp {
         returnMenuButton();
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu after viewing a character
     private void viewNextChara(CharacterLib charas, World world) {
         resetPanel();
@@ -765,7 +835,7 @@ public class StoryArchiveApp {
         returnMenuButton();
     }
 
-    // MODIFIES: charas
+    // MODIFIES: this
     // EFFECTS: provides the menu for the editing of existing characters
     private void editExistingCharacter(CharacterLib charas) {
         resetPanel();
@@ -779,6 +849,7 @@ public class StoryArchiveApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu for the viewing of existing characters
     private void viewCharas(CharacterLib charas, World world) {
         resetPanel();
@@ -792,7 +863,7 @@ public class StoryArchiveApp {
         }
     }
 
-    // MODIFIES: story
+    // MODIFIES: this
     // EFFECTS: provides the menu for the editing of existing chapters
     private void editExistingChapter(PageLib story) {
         resetPanel();
@@ -806,6 +877,7 @@ public class StoryArchiveApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu for the viewing of existing chapters
     private void viewStory(PageLib story, World world) {
         resetPanel();
@@ -819,7 +891,7 @@ public class StoryArchiveApp {
         }
     }
 
-    // MODIFIES: page
+    // MODIFIES: this
     // EFFECTS: provides the menu for the editing of a page
     private void editPage(PageLib pages, Page page) {
         resetPanel();
@@ -841,6 +913,7 @@ public class StoryArchiveApp {
         returnMenuButton();
     }
 
+    // MODIFIES: this, pages
     // EFFECTS: provides the page removing menu for a specific page
     private void removePage(PageLib pages, Page page) {
         resetPanel();
@@ -860,6 +933,7 @@ public class StoryArchiveApp {
         goBack.addActionListener(e -> editPage(pages, page));
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu for the viewing of a story page
     private void viewStoryPage(PageLib story, Page chapter, World world) {
         resetPanel();
@@ -868,6 +942,7 @@ public class StoryArchiveApp {
         ok.addActionListener(e -> viewNextStory(story, world));
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu for the viewing of a detail page
     private void viewDetailPage(PageLib details, Page detail, World world) {
         resetPanel();
@@ -876,6 +951,7 @@ public class StoryArchiveApp {
         ok.addActionListener(e -> viewNextDetails(details, world));
     }
 
+    // MODIFIES: this
     // EFFECTS: provides the menu for the viewing of a character
     private void viewCharacter(CharacterLib charas, Character chara, World world) {
         resetPanel();
@@ -884,7 +960,7 @@ public class StoryArchiveApp {
         ok.addActionListener(e -> viewNextChara(charas, world));
     }
 
-    // MODIFIES: chara
+    // MODIFIES: this
     // EFFECTS: provides the menu for the editing of a character
     private void editCharacter(CharacterLib charas, Character chara) {
         resetPanel();
@@ -906,6 +982,7 @@ public class StoryArchiveApp {
         returnMenuButton();
     }
 
+    // MODIFIES: this, charas
     // EFFECTS: provides the character removing menu for a specific character
     private void removeCharacter(CharacterLib charas, Character chara) {
         resetPanel();
@@ -925,6 +1002,7 @@ public class StoryArchiveApp {
         goBack.addActionListener(e -> editCharacter(charas, chara));
     }
 
+    // MODIFIES: this
     // EFFECTS: saves the current archive to file
     private void saveArchive() {
         resetPanel();
