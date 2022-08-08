@@ -38,7 +38,7 @@ public class StoryArchiveApp {
         frame.add(label, BorderLayout.NORTH);
         panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.setLayout(new GridLayout(8, 1));
+        panel.setLayout(new GridLayout(7, 1));
         panel.setVisible(true);
         frame.add(panel);
         mainMenu();
@@ -58,46 +58,26 @@ public class StoryArchiveApp {
     private void mainMenu() {
         resetPanel();
         newLabel("\nWhat would you like to do?");
-        newWorldButton();
-        editWorldButton();
-        viewWorldButton();
-        saveButton();
-        loadButton();
+        loadButtons();
     }
 
     // MODIFIES: this
-    // EFFECTS: makes a load button and adds it to the panel
-    private void loadButton() {
-        JButton load = printButton("Load an Archive from file");
-        load.addActionListener(e -> loadArchive());
-    }
-
-    // MODIFIES: this
-    // EFFECTS: makes a load button and adds it to the panel
-    private void saveButton() {
-        JButton save = printButton("Save this Archive to file");
-        save.addActionListener(e -> saveArchive());
-    }
-
-    // MODIFIES: this
-    // EFFECTS: makes a load button and adds it to the panel
-    private void viewWorldButton() {
-        JButton viewWorld = printButton("View an existing world");
-        viewWorld.addActionListener(e -> viewExistingWorld());
-    }
-
-    // MODIFIES: this
-    // EFFECTS: makes a load button and adds it to the panel
-    private void editWorldButton() {
-        JButton editWorld = printButton("Edit an existing world");
-        editWorld.addActionListener(e -> editExistingWorld());
-    }
-
-    // MODIFIES: this
-    // EFFECTS: makes a load button and adds it to the panel
-    private void newWorldButton() {
+    // EFFECTS: loads menu buttons
+    private void loadButtons() {
         JButton newWorld = printButton("Create a new world");
         newWorld.addActionListener(e -> createNewWorld());
+
+        JButton editWorld = printButton("Edit an existing world");
+        editWorld.addActionListener(e -> editExistingWorld());
+
+        JButton viewWorld = printButton("View an existing world");
+        viewWorld.addActionListener(e -> viewExistingWorld());
+
+        JButton save = printButton("Save this Archive to file");
+        save.addActionListener(e -> saveArchive());
+
+        JButton load = printButton("Load an Archive from file");
+        load.addActionListener(e -> loadArchive());
     }
 
     private void returnMenuButton() {
@@ -138,7 +118,7 @@ public class StoryArchiveApp {
 
     // EFFECTS: provides the return to menu text
     private void returnMenu() {
-        label.setText(label.getText() + "\nReturning to menu.");
+        label.setText(label.getText() + " Returning to menu.");
         mainMenu();
     }
 
@@ -162,38 +142,38 @@ public class StoryArchiveApp {
     // EFFECTS: provides the name/title entering text
     private String enterThe(String thing) {
         if (thing.equals("world") || thing.equals("character")) {
-            return "\nEnter the name of your new " + thing + ": ";
+            return "Enter the name of your new " + thing + ": ";
         } else {
-            return "\nEnter the title of your new " + thing + ": ";
+            return "Enter the title of your new " + thing + ": ";
         }
     }
 
     // EFFECTS: provides the name/title entering text
     private String enterThe(String thing, String action) {
         if (thing.equals("world") || thing.equals("character")) {
-            return "\nEnter the name of the " + thing + " you would like to " + action + ": ";
+            return "Enter the name of the " + thing + " you would like to " + action + ": ";
         } else {
-            return "\nEnter the title of the " + thing + " you would like to " + action + ": ";
+            return "Enter the title of the " + thing + " you would like to " + action + ": ";
         }
     }
 
     // EFFECTS: provides the creation confirmation menu
     private String createNew(String thing, String name) {
         if (thing.equals("character") || thing.equals("world")) {
-            return "\nCreate a new " + thing + " named " + name + "?";
+            return "Create a new " + thing + " named " + name + "?";
         } else {
-            return "\nCreate a new " + thing + " titled " + name + "?";
+            return "Create a new " + thing + " titled " + name + "?";
         }
     }
 
     // EFFECTS: provides the editing menu
     private String partOfLibMenu(String worldName, String thing) {
         if (thing.equals("character")) {
-            return "\nHow would you like to edit " + worldName + "'s characters?";
+            return "How would you like to edit " + worldName + "'s characters?";
         } else if (thing.equals("chapter")) {
-            return "\nWhat part of " + worldName + "'s story would you like to edit?";
+            return "What part of " + worldName + "'s story would you like to edit?";
         } else {
-            return "\nWhat part of " + worldName + "'s details would you like to edit?";
+            return "What part of " + worldName + "'s details would you like to edit?";
         }
     }
 
@@ -244,9 +224,10 @@ public class StoryArchiveApp {
         } else {
             newLabel("\nYour existing worlds:");
             for (World w : worlds.getWorldArrayList()) {
-                label.setText(label.getText() + " \n" + w.getName());
+                label.setText(label.getText() + " " + w.getName() + ",");
             }
-            label.setText(label.getText() + " \n" + enterThe("world", "edit"));
+            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
+            label.setText(label.getText() + enterThe("world", "edit"));
             TextField textField = new TextField();
             panel.add(textField);
             textField.addActionListener(e -> {
@@ -267,11 +248,12 @@ public class StoryArchiveApp {
         if (worlds.isEmpty()) {
             notExist("worlds");
         } else {
-            newLabel("\nYour existing worlds:");
+            newLabel("Your existing worlds:");
             for (World w : worlds.getWorldArrayList()) {
-                label.setText(label.getText() + " \n" + w.getName());
+                label.setText(label.getText() + " " + w.getName() + ",");
             }
-            label.setText(label.getText() + " \n" + enterThe("world", "view"));
+            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
+            label.setText(label.getText() + enterThe("world", "view"));
             TextField textField = new TextField();
             panel.add(textField);
             textField.addActionListener(e -> {
@@ -290,7 +272,7 @@ public class StoryArchiveApp {
     private void editWorld(World world) {
         resetPanel();
         String worldName = world.getName();
-        newLabel("\nWhat part of " + worldName + " would you like to edit?");
+        newLabel("What part of " + worldName + " would you like to edit?");
 
         JButton rename = printButton("Rename " + worldName);
         rename.addActionListener(e -> renameWorld(world));
@@ -339,7 +321,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the world removing menu for a specific world
     private void removeWorld(World world) {
         resetPanel();
-        newLabel("Permanently remove " + world.getName() + " from Archive?\n(This action cannot be undone.)");
+        newLabel("Permanently remove " + world.getName() + " from Archive? (This action cannot be undone.)");
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> {
             try {
@@ -557,7 +539,7 @@ public class StoryArchiveApp {
 
     private void addedDescription(Page page, String text) {
         resetPanel();
-        newLabel("Confirm your submission: " + " \n" + page.getBody() + " " + text);
+        newLabel("Confirm your submission: " + " " + page.getBody() + " " + text);
 
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> page.addText(text));
@@ -567,7 +549,7 @@ public class StoryArchiveApp {
 
     private void addedDescription(Character chara, String text) {
         resetPanel();
-        newLabel("Confirm your submission: " + " \n" + chara.getDesc() + " " + text);
+        newLabel("Confirm your submission: " + " " + chara.getDesc() + " " + text);
 
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> chara.addDesc(text));
@@ -597,7 +579,7 @@ public class StoryArchiveApp {
 
     private void replacedDescription(Page page, String text) {
         resetPanel();
-        newLabel("Confirm your submission: " + " \n" + text);
+        newLabel("Confirm your submission: " + " " + text);
 
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> page.replaceText(text));
@@ -607,7 +589,7 @@ public class StoryArchiveApp {
 
     private void replacedDescription(Character chara, String text) {
         resetPanel();
-        newLabel("Confirm your submission: " + " \n" + text);
+        newLabel("Confirm your submission: " + text);
 
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> chara.replaceDesc(text));
@@ -678,9 +660,10 @@ public class StoryArchiveApp {
         } else {
             newLabel("\nYour existing pages: ");
             for (Page p : details.getPageArrayList()) {
-                label.setText(label.getText() + " \n" + p.getTitle());
+                label.setText(label.getText() + " " + p.getTitle() + ",");
             }
-            label.setText(label.getText() + " \n" + enterThe("page", "edit"));
+            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
+            label.setText(label.getText() + enterThe("page", "edit"));
             TextField textField = new TextField();
             panel.add(textField);
             textField.addActionListener(e -> {
@@ -702,11 +685,12 @@ public class StoryArchiveApp {
         if (details.isEmpty()) {
             notExist("world detail pages");
         } else {
-            newLabel("\nYour existing pages: ");
+            newLabel("Your existing pages: ");
             for (Page p : details.getPageArrayList()) {
-                label.setText(label.getText() + " \n" + p.getTitle());
+                label.setText(label.getText() + " " + p.getTitle() + ",");
             }
-            label.setText(label.getText() + " \n" + enterThe("page", "view"));
+            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
+            label.setText(label.getText() + enterThe("page", "view"));
             TextField textField = new TextField();
             panel.add(textField);
             textField.addActionListener(e -> {
@@ -723,7 +707,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu after viewing a detail
     private void viewNextDetails(PageLib details, World world) {
         resetPanel();
-        newLabel("\nWhat would you like to do next?");
+        newLabel("What would you like to do next?");
         JButton more = printButton("View more details");
         more.addActionListener(e -> viewDetails(details, world));
 
@@ -735,7 +719,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu after viewing a story chapter
     private void viewNextStory(PageLib story, World world) {
         resetPanel();
-        newLabel("\nWhat would you like to do next?");
+        newLabel("What would you like to do next?");
 
         JButton more = printButton("View more chapters");
         more.addActionListener(e -> viewStory(story, world));
@@ -748,7 +732,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu after viewing a character
     private void viewNextChara(CharacterLib charas, World world) {
         resetPanel();
-        newLabel("\nWhat would you like to do next?");
+        newLabel("What would you like to do next?");
 
         JButton more = printButton("View more characters");
         more.addActionListener(e -> viewCharas(charas, world));
@@ -767,9 +751,10 @@ public class StoryArchiveApp {
         } else {
             newLabel("\nYour existing characters: ");
             for (Character c : charas.getCharaArrayList()) {
-                label.setText(label.getText() + " \n" + c.getName());
+                label.setText(label.getText() + " " + c.getName() + ",");
             }
-            label.setText(label.getText() + " \n" + enterThe("character", "edit"));
+            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
+            label.setText(label.getText() + enterThe("character", "edit"));
             TextField textField = new TextField();
             panel.add(textField);
             textField.addActionListener(e -> {
@@ -792,9 +777,10 @@ public class StoryArchiveApp {
         } else {
             newLabel("\nYour existing characters: ");
             for (Character c : charas.getCharaArrayList()) {
-                label.setText(label.getText() + " \n" + c.getName());
+                label.setText(label.getText() + " " + c.getName() + ",");
             }
-            label.setText(label.getText() + " \n" + enterThe("character", "view"));
+            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
+            label.setText(label.getText() + enterThe("character", "view"));
             TextField textField = new TextField();
             panel.add(textField);
             textField.addActionListener(e -> {
@@ -815,11 +801,12 @@ public class StoryArchiveApp {
         if (story.isEmpty()) {
             notExist("chapters");
         } else {
-            newLabel("\nYour existing chapters: ");
+            newLabel("\nYour existing chapters:");
             for (Page p : story.getPageArrayList()) {
-                label.setText(label.getText() + " \n" + p.getTitle());
+                label.setText(label.getText() + " " + p.getTitle() + ",");
             }
-            label.setText(label.getText() + " \n" + enterThe("chapter", "edit"));
+            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
+            label.setText(label.getText() + enterThe("chapter", "edit"));
             TextField textField = new TextField();
             panel.add(textField);
             textField.addActionListener(e -> {
@@ -840,11 +827,12 @@ public class StoryArchiveApp {
         if (story.isEmpty()) {
             notExist("chapters");
         } else {
-            newLabel("\nYour existing chapters: ");
+            newLabel("Your existing chapters:");
             for (Page p : story.getPageArrayList()) {
-                label.setText(label.getText() + " \n" + p.getTitle());
+                label.setText(label.getText() + " " + p.getTitle() + ",");
             }
-            label.setText(label.getText() + " \n" + enterThe("chapter", "view"));
+            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
+            label.setText(label.getText() + enterThe("chapter", "view"));
             TextField textField = new TextField();
             panel.add(textField);
             textField.addActionListener(e -> {
@@ -863,7 +851,7 @@ public class StoryArchiveApp {
     private void editPage(PageLib pages, Page page) {
         resetPanel();
         String name = page.getTitle();
-        newLabel("\nHow would you like to edit " + name + "?");
+        newLabel("How would you like to edit " + name + "?");
 
         JButton reTitle = printButton("Re-title " + name);
         reTitle.addActionListener(e -> renamePage(page));
@@ -883,7 +871,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the page removing menu for a specific page
     private void removePage(PageLib pages, Page page) {
         resetPanel();
-        newLabel("Permanently remove " + page.getTitle() + " from Archive?\n(This action cannot be undone.)");
+        newLabel("Permanently remove " + page.getTitle() + " from Archive? (This action cannot be undone.)");
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> {
             try {
@@ -902,24 +890,21 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for the viewing of a story page
     private void viewStoryPage(PageLib story, Page chapter, World world) {
         resetPanel();
-        newLabel("\n" + chapter.getTitle());
-        label.setText(label.getText() + " \n" + chapter.getBody());
+        newLabel(chapter.getTitle() + ": " + chapter.getBody());
         viewNextStory(story, world);
     }
 
     // EFFECTS: provides the menu for the viewing of a detail page
     private void viewDetailPage(PageLib details, Page detail, World world) {
         resetPanel();
-        newLabel("\n" + detail.getTitle());
-        label.setText(label.getText() + " \n" + detail.getBody());
+        newLabel(detail.getTitle() + ": " + detail.getBody());
         viewNextDetails(details, world);
     }
 
     // EFFECTS: provides the menu for the viewing of a character
     private void viewCharacter(CharacterLib charas, Character chara, World world) {
         resetPanel();
-        newLabel("\n" + chara.getName());
-        label.setText(label.getText() + " \n" + chara.getDesc());
+        newLabel(chara.getName() + ": " + chara.getDesc());
         viewNextChara(charas, world);
     }
 

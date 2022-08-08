@@ -106,9 +106,7 @@ public class WorldLib {
     // EFFECTS: produces an arraylist of all the worlds in world library
     public ArrayList<World> getWorldArrayList() {
         ArrayList<World> worlds = new ArrayList<>();
-        for (World w : this.worlds) {
-            worlds.add(w);
-        }
+        worlds.addAll(this.worlds);
         return worlds;
     }
 

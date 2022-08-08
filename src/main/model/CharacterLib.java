@@ -104,9 +104,7 @@ public class CharacterLib {
     // EFFECTS: produces an arraylist of all the characters in character library
     public ArrayList<Character> getCharaArrayList() {
         ArrayList<Character> characters = new ArrayList<>();
-        for (Character chara : charas) {
-            characters.add(chara);
-        }
+        characters.addAll(charas);
         return characters;
     }
 

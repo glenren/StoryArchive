@@ -105,9 +105,7 @@ public class PageLib {
     // EFFECTS: produces an arraylist of all the pages in page library
     public ArrayList<Page> getPageArrayList() {
         ArrayList<Page> pages = new ArrayList<>();
-        for (Page p : this.pages) {
-            pages.add(p);
-        }
+        pages.addAll(this.pages);
         return pages;
     }
 
