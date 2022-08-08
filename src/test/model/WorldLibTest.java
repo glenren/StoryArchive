@@ -37,6 +37,7 @@ public class WorldLibTest {
         }
         assertFalse(worlds.isWorldInLib("anything"));
         assertEquals(worlds.getWorldList(), "");
+        assertEquals(worlds.getWorldArrayList().size(), 0);
     }
 
     @Test
@@ -56,6 +57,7 @@ public class WorldLibTest {
             fail();
         }
         assertEquals(worlds.getWorldList(), "w1");
+        assertEquals(worlds.getWorldArrayList().size(), 1);
 
         try {
             worlds.removeWorld("w1");
@@ -68,6 +70,7 @@ public class WorldLibTest {
         assertEquals(worlds.length(), 0);
         assertFalse(worlds.isWorldInLib("w1"));
         assertEquals(worlds.getWorldList(), "");
+        assertEquals(worlds.getWorldArrayList().size(), 0);
         try {
             worlds.getWorld("w1");
             fail();
@@ -95,6 +98,7 @@ public class WorldLibTest {
         assertTrue(worlds.isWorldInLib("w1"));
         assertTrue(worlds.isWorldInLib("w2"));
         assertEquals(worlds.getWorldList(), "w1, w2");
+        assertEquals(worlds.getWorldArrayList().size(), 2);
         try {
             assertEquals(worlds.getWorld("w1"), w1);
             assertEquals(worlds.getWorld("w2"), w2);
@@ -124,6 +128,7 @@ public class WorldLibTest {
             fail();
         }
         assertEquals(worlds.getWorldList(), "w2");
+        assertEquals(worlds.getWorldArrayList().size(), 1);
 
         try {
             worlds.removeWorld("w2");
@@ -137,6 +142,7 @@ public class WorldLibTest {
         assertFalse(worlds.isWorldInLib("w1"));
         assertFalse(worlds.isWorldInLib("w2"));
         assertEquals(worlds.getWorldList(), "");
+        assertEquals(worlds.getWorldArrayList().size(), 0);
         try {
             worlds.getWorld("w1");
             fail();
@@ -176,6 +182,7 @@ public class WorldLibTest {
         assertTrue(worlds.isWorldInLib("w2"));
         assertTrue(worlds.isWorldInLib("w3"));
         assertEquals(worlds.getWorldList(), "w1, w2, w3");
+        assertEquals(worlds.getWorldArrayList().size(), 3);
         try {
             assertEquals(worlds.getWorld("w1"), w1);
             assertEquals(worlds.getWorld("w2"), w2);
@@ -213,6 +220,7 @@ public class WorldLibTest {
             fail();
         }
         assertEquals(worlds.getWorldList(), "w3");
+        assertEquals(worlds.getWorldArrayList().size(), 1);
 
         try {
             worlds.removeWorld("w3");
@@ -227,6 +235,7 @@ public class WorldLibTest {
         assertFalse(worlds.isWorldInLib("w2"));
         assertFalse(worlds.isWorldInLib("w3"));
         assertEquals(worlds.getWorldList(), "");
+        assertEquals(worlds.getWorldArrayList().size(), 0);
         try {
             worlds.getWorld("w1");
             fail();
@@ -276,6 +285,7 @@ public class WorldLibTest {
         assertTrue(worlds.isWorldInLib("w2"));
         assertTrue(worlds.isWorldInLib("w3"));
         assertEquals(worlds.getWorldList(), "w2, w3, w1");
+        assertEquals(worlds.getWorldArrayList().size(), 3);
         try {
             assertEquals(worlds.getWorld("w1"), w1);
             assertEquals(worlds.getWorld("w2"), w2);
@@ -312,6 +322,7 @@ public class WorldLibTest {
             fail();
         }
         assertEquals(worlds.getWorldList(), "w2, w1");
+        assertEquals(worlds.getWorldArrayList().size(), 2);
 
         try {
             worlds.removeWorld("w1");
@@ -331,6 +342,7 @@ public class WorldLibTest {
         assertFalse(worlds.isWorldInLib("w2"));
         assertFalse(worlds.isWorldInLib("w3"));
         assertEquals(worlds.getWorldList(), "");
+        assertEquals(worlds.getWorldArrayList().size(), 0);
         try {
             worlds.getWorld("w1");
             fail();
@@ -391,6 +403,7 @@ public class WorldLibTest {
             fail();
         }
         assertEquals(worlds.getWorldList(), "w1");
+        assertEquals(worlds.getWorldArrayList().size(), 1);
 
         try {
             assertTrue(worlds.addWorld(w2));
@@ -419,6 +432,7 @@ public class WorldLibTest {
             fail();
         }
         assertEquals(worlds.getWorldList(), "w1, w2");
+        assertEquals(worlds.getWorldArrayList().size(), 2);
     }
 
     @Test
@@ -429,8 +443,6 @@ public class WorldLibTest {
         World w7 = new World("w7");
         World w8 = new World("w8");
         World w9 = new World("w9");
-        World w10 = new World("w10");
-        World w11 = new World("w11");
 
         try {
             assertTrue(worlds.addWorld(w1));
@@ -441,15 +453,13 @@ public class WorldLibTest {
             assertTrue(worlds.addWorld(w6));
             assertTrue(worlds.addWorld(w7));
             assertTrue(worlds.addWorld(w8));
-            assertTrue(worlds.addWorld(w9));
-            assertTrue(worlds.addWorld(w10));
         } catch (AlreadyExistsException aE) {
             fail();
         }
 
         assertFalse(worlds.isEmpty());
         assertTrue(worlds.isFull());
-        assertEquals(worlds.length(), 10);
+        assertEquals(worlds.length(), 8);
         assertTrue(worlds.isWorldInLib("w1"));
         assertTrue(worlds.isWorldInLib("w2"));
         assertTrue(worlds.isWorldInLib("w3"));
@@ -458,9 +468,8 @@ public class WorldLibTest {
         assertTrue(worlds.isWorldInLib("w6"));
         assertTrue(worlds.isWorldInLib("w7"));
         assertTrue(worlds.isWorldInLib("w8"));
-        assertTrue(worlds.isWorldInLib("w9"));
-        assertTrue(worlds.isWorldInLib("w10"));
-        assertEquals(worlds.getWorldList(), "w1, w2, w3, w4, w5, w6, w7, w8, w9, w10");
+        assertEquals(worlds.getWorldList(), "w1, w2, w3, w4, w5, w6, w7, w8");
+        assertEquals(worlds.getWorldArrayList().size(), 8);
         try {
             assertEquals(worlds.getWorld("w1"), w1);
             assertEquals(worlds.getWorld("w2"), w2);
@@ -470,21 +479,19 @@ public class WorldLibTest {
             assertEquals(worlds.getWorld("w6"), w6);
             assertEquals(worlds.getWorld("w7"), w7);
             assertEquals(worlds.getWorld("w8"), w8);
-            assertEquals(worlds.getWorld("w9"), w9);
-            assertEquals(worlds.getWorld("w10"), w10);
         } catch (NotFoundException nfe) {
             fail();
         }
 
         try {
-            assertFalse(worlds.addWorld(w11));
+            assertFalse(worlds.addWorld(w9));
         } catch (AlreadyExistsException aE) {
             fail();
         }
 
         assertFalse(worlds.isEmpty());
         assertTrue(worlds.isFull());
-        assertEquals(worlds.length(), 10);
+        assertEquals(worlds.length(), 8);
         assertTrue(worlds.isWorldInLib("w1"));
         assertTrue(worlds.isWorldInLib("w2"));
         assertTrue(worlds.isWorldInLib("w3"));
@@ -493,9 +500,8 @@ public class WorldLibTest {
         assertTrue(worlds.isWorldInLib("w6"));
         assertTrue(worlds.isWorldInLib("w7"));
         assertTrue(worlds.isWorldInLib("w8"));
-        assertTrue(worlds.isWorldInLib("w9"));
-        assertTrue(worlds.isWorldInLib("w10"));
-        assertEquals(worlds.getWorldList(), "w1, w2, w3, w4, w5, w6, w7, w8, w9, w10");
+        assertEquals(worlds.getWorldList(), "w1, w2, w3, w4, w5, w6, w7, w8");
+        assertEquals(worlds.getWorldArrayList().size(), 8);
         try {
             assertEquals(worlds.getWorld("w1"), w1);
             assertEquals(worlds.getWorld("w2"), w2);
@@ -505,14 +511,12 @@ public class WorldLibTest {
             assertEquals(worlds.getWorld("w6"), w6);
             assertEquals(worlds.getWorld("w7"), w7);
             assertEquals(worlds.getWorld("w8"), w8);
-            assertEquals(worlds.getWorld("w9"), w9);
-            assertEquals(worlds.getWorld("w10"), w10);
         } catch (NotFoundException nfe) {
             fail();
         }
-        assertFalse(worlds.isWorldInLib("w11"));
+        assertFalse(worlds.isWorldInLib("w9"));
         try {
-            worlds.getWorld("w11");
+            worlds.getWorld("w9");
             fail();
         } catch (NotFoundException nfe) {
         }
@@ -524,14 +528,14 @@ public class WorldLibTest {
         }
 
         try {
-            assertTrue(worlds.addWorld(w11));
+            assertTrue(worlds.addWorld(w9));
         } catch (AlreadyExistsException aE) {
             fail();
         }
 
         assertFalse(worlds.isEmpty());
         assertTrue(worlds.isFull());
-        assertEquals(worlds.length(), 10);
+        assertEquals(worlds.length(), 8);
         assertFalse(worlds.isWorldInLib("w1"));
         assertTrue(worlds.isWorldInLib("w2"));
         assertTrue(worlds.isWorldInLib("w3"));
@@ -541,11 +545,9 @@ public class WorldLibTest {
         assertTrue(worlds.isWorldInLib("w7"));
         assertTrue(worlds.isWorldInLib("w8"));
         assertTrue(worlds.isWorldInLib("w9"));
-        assertTrue(worlds.isWorldInLib("w10"));
-        assertTrue(worlds.isWorldInLib("w11"));
-        assertEquals(worlds.getWorldList(), "w2, w3, w4, w5, w6, w7, w8, w9, w10, w11");
+        assertEquals(worlds.getWorldList(), "w2, w3, w4, w5, w6, w7, w8, w9");
+        assertEquals(worlds.getWorldArrayList().size(), 8);
         try {
-            assertEquals(worlds.getWorld("w11"), w11);
             assertEquals(worlds.getWorld("w2"), w2);
             assertEquals(worlds.getWorld("w3"), w3);
             assertEquals(worlds.getWorld("w4"), w4);
@@ -554,7 +556,6 @@ public class WorldLibTest {
             assertEquals(worlds.getWorld("w7"), w7);
             assertEquals(worlds.getWorld("w8"), w8);
             assertEquals(worlds.getWorld("w9"), w9);
-            assertEquals(worlds.getWorld("w10"), w10);
         } catch (NotFoundException nfe) {
             fail();
         }
@@ -596,6 +597,7 @@ public class WorldLibTest {
             fail();
         }
         assertEquals(worlds.getWorldList(), "Ahhh");
+        assertEquals(worlds.getWorldArrayList().size(), 1);
 
         try {
             worlds.addWorld(w2);
@@ -610,6 +612,7 @@ public class WorldLibTest {
         }
 
         assertEquals(worlds.getWorldList(), "Ahhh");
+        assertEquals(worlds.getWorldArrayList().size(), 1);
 
         try {
             worlds.removeWorld("ahhh");
@@ -618,5 +621,6 @@ public class WorldLibTest {
         }
 
         assertEquals(worlds.getWorldList(), "");
+        assertEquals(worlds.getWorldArrayList().size(), 0);
     }
 }

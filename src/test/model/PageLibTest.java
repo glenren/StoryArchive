@@ -37,6 +37,7 @@ public class PageLibTest {
         }
         assertFalse(pages.isPageInLib("anything"));
         assertEquals(pages.getPageList(), "");
+        assertEquals(pages.getPageArrayList().size(), 0);
     }
 
     @Test
@@ -56,6 +57,7 @@ public class PageLibTest {
             fail();
         }
         assertEquals(pages.getPageList(), "p1");
+        assertEquals(pages.getPageArrayList().size(), 1);
 
         try {
             pages.removePage("p1");
@@ -68,6 +70,7 @@ public class PageLibTest {
         assertEquals(pages.length(), 0);
         assertFalse(pages.isPageInLib("p1"));
         assertEquals(pages.getPageList(), "");
+        assertEquals(pages.getPageArrayList().size(), 0);
         try {
             pages.getPage("p1");
             fail();
@@ -95,6 +98,7 @@ public class PageLibTest {
         assertTrue(pages.isPageInLib("p1"));
         assertTrue(pages.isPageInLib("p2"));
         assertEquals(pages.getPageList(), "p1, p2");
+        assertEquals(pages.getPageArrayList().size(), 2);
         try {
             assertEquals(pages.getPage("p1"), p1);
             assertEquals(pages.getPage("p2"), p2);
@@ -124,6 +128,7 @@ public class PageLibTest {
             fail();
         }
         assertEquals(pages.getPageList(), "p2");
+        assertEquals(pages.getPageArrayList().size(), 1);
 
         try {
             pages.removePage("p2");
@@ -137,6 +142,7 @@ public class PageLibTest {
         assertFalse(pages.isPageInLib("p1"));
         assertFalse(pages.isPageInLib("p2"));
         assertEquals(pages.getPageList(), "");
+        assertEquals(pages.getPageArrayList().size(), 0);
         try {
             pages.getPage("p1");
             fail();
@@ -176,6 +182,7 @@ public class PageLibTest {
         assertTrue(pages.isPageInLib("p2"));
         assertTrue(pages.isPageInLib("p3"));
         assertEquals(pages.getPageList(), "p1, p2, p3");
+        assertEquals(pages.getPageArrayList().size(), 3);
         try {
             assertEquals(pages.getPage("p1"), p1);
             assertEquals(pages.getPage("p2"), p2);
@@ -213,6 +220,7 @@ public class PageLibTest {
             fail();
         }
         assertEquals(pages.getPageList(), "p3");
+        assertEquals(pages.getPageArrayList().size(), 1);
 
         try {
             pages.removePage("p3");
@@ -227,6 +235,7 @@ public class PageLibTest {
         assertFalse(pages.isPageInLib("p2"));
         assertFalse(pages.isPageInLib("p3"));
         assertEquals(pages.getPageList(), "");
+        assertEquals(pages.getPageArrayList().size(), 0);
         try {
             pages.getPage("p1");
             fail();
@@ -276,6 +285,7 @@ public class PageLibTest {
         assertTrue(pages.isPageInLib("p2"));
         assertTrue(pages.isPageInLib("p3"));
         assertEquals(pages.getPageList(), "p2, p3, p1");
+        assertEquals(pages.getPageArrayList().size(), 3);
         try {
             assertEquals(pages.getPage("p1"), p1);
             assertEquals(pages.getPage("p2"), p2);
@@ -312,6 +322,7 @@ public class PageLibTest {
             fail();
         }
         assertEquals(pages.getPageList(), "p2, p1");
+        assertEquals(pages.getPageArrayList().size(), 2);
 
         try {
             pages.removePage("p1");
@@ -331,6 +342,7 @@ public class PageLibTest {
         assertFalse(pages.isPageInLib("p2"));
         assertFalse(pages.isPageInLib("p3"));
         assertEquals(pages.getPageList(), "");
+        assertEquals(pages.getPageArrayList().size(), 0);
         try {
             pages.getPage("p1");
             fail();
@@ -391,6 +403,7 @@ public class PageLibTest {
             fail();
         }
         assertEquals(pages.getPageList(), "p1");
+        assertEquals(pages.getPageArrayList().size(), 1);
 
         try {
             assertTrue(pages.addPage(p2));
@@ -419,6 +432,7 @@ public class PageLibTest {
             fail();
         }
         assertEquals(pages.getPageList(), "p1, p2");
+        assertEquals(pages.getPageArrayList().size(), 2);
     }
 
     @Test
@@ -429,8 +443,6 @@ public class PageLibTest {
         Page p7 = new Page("p7", "d7");
         Page p8 = new Page("p8", "d8");
         Page p9 = new Page("p9", "d9");
-        Page p10 = new Page("p10", "d10");
-        Page p11 = new Page("p11", "d11");
 
         try {
             assertTrue(pages.addPage(p1));
@@ -441,15 +453,13 @@ public class PageLibTest {
             assertTrue(pages.addPage(p6));
             assertTrue(pages.addPage(p7));
             assertTrue(pages.addPage(p8));
-            assertTrue(pages.addPage(p9));
-            assertTrue(pages.addPage(p10));
         } catch (AlreadyExistsException aE) {
             fail();
         }
 
         assertFalse(pages.isEmpty());
         assertTrue(pages.isFull());
-        assertEquals(pages.length(), 10);
+        assertEquals(pages.length(), 8);
         assertTrue(pages.isPageInLib("p1"));
         assertTrue(pages.isPageInLib("p2"));
         assertTrue(pages.isPageInLib("p3"));
@@ -458,9 +468,8 @@ public class PageLibTest {
         assertTrue(pages.isPageInLib("p6"));
         assertTrue(pages.isPageInLib("p7"));
         assertTrue(pages.isPageInLib("p8"));
-        assertTrue(pages.isPageInLib("p9"));
-        assertTrue(pages.isPageInLib("p10"));
-        assertEquals(pages.getPageList(), "p1, p2, p3, p4, p5, p6, p7, p8, p9, p10");
+        assertEquals(pages.getPageList(), "p1, p2, p3, p4, p5, p6, p7, p8");
+        assertEquals(pages.getPageArrayList().size(), 8);
         try {
             assertEquals(pages.getPage("p1"), p1);
             assertEquals(pages.getPage("p2"), p2);
@@ -470,21 +479,19 @@ public class PageLibTest {
             assertEquals(pages.getPage("p6"), p6);
             assertEquals(pages.getPage("p7"), p7);
             assertEquals(pages.getPage("p8"), p8);
-            assertEquals(pages.getPage("p9"), p9);
-            assertEquals(pages.getPage("p10"), p10);
         } catch (NotFoundException nfe) {
             fail();
         }
 
         try {
-            assertFalse(pages.addPage(p11));
+            assertFalse(pages.addPage(p9));
         } catch (AlreadyExistsException aE) {
             fail();
         }
 
         assertFalse(pages.isEmpty());
         assertTrue(pages.isFull());
-        assertEquals(pages.length(), 10);
+        assertEquals(pages.length(), 8);
         assertTrue(pages.isPageInLib("p1"));
         assertTrue(pages.isPageInLib("p2"));
         assertTrue(pages.isPageInLib("p3"));
@@ -493,9 +500,8 @@ public class PageLibTest {
         assertTrue(pages.isPageInLib("p6"));
         assertTrue(pages.isPageInLib("p7"));
         assertTrue(pages.isPageInLib("p8"));
-        assertTrue(pages.isPageInLib("p9"));
-        assertTrue(pages.isPageInLib("p10"));
-        assertEquals(pages.getPageList(), "p1, p2, p3, p4, p5, p6, p7, p8, p9, p10");
+        assertEquals(pages.getPageList(), "p1, p2, p3, p4, p5, p6, p7, p8");
+        assertEquals(pages.getPageArrayList().size(), 8);
         try {
             assertEquals(pages.getPage("p1"), p1);
             assertEquals(pages.getPage("p2"), p2);
@@ -505,14 +511,12 @@ public class PageLibTest {
             assertEquals(pages.getPage("p6"), p6);
             assertEquals(pages.getPage("p7"), p7);
             assertEquals(pages.getPage("p8"), p8);
-            assertEquals(pages.getPage("p9"), p9);
-            assertEquals(pages.getPage("p10"), p10);
         } catch (NotFoundException nfe) {
             fail();
         }
-        assertFalse(pages.isPageInLib("p11"));
+        assertFalse(pages.isPageInLib("p9"));
         try {
-            pages.getPage("p11");
+            pages.getPage("p9");
             fail();
         } catch (NotFoundException nfe) {
         }
@@ -524,14 +528,14 @@ public class PageLibTest {
         }
 
         try {
-            assertTrue(pages.addPage(p11));
+            assertTrue(pages.addPage(p9));
         } catch (AlreadyExistsException aE) {
             fail();
         }
 
         assertFalse(pages.isEmpty());
         assertTrue(pages.isFull());
-        assertEquals(pages.length(), 10);
+        assertEquals(pages.length(), 8);
         assertFalse(pages.isPageInLib("p1"));
         assertTrue(pages.isPageInLib("p2"));
         assertTrue(pages.isPageInLib("p3"));
@@ -541,11 +545,9 @@ public class PageLibTest {
         assertTrue(pages.isPageInLib("p7"));
         assertTrue(pages.isPageInLib("p8"));
         assertTrue(pages.isPageInLib("p9"));
-        assertTrue(pages.isPageInLib("p10"));
-        assertTrue(pages.isPageInLib("p11"));
-        assertEquals(pages.getPageList(), "p2, p3, p4, p5, p6, p7, p8, p9, p10, p11");
+        assertEquals(pages.getPageList(), "p2, p3, p4, p5, p6, p7, p8, p9");
+        assertEquals(pages.getPageArrayList().size(), 8);
         try {
-            assertEquals(pages.getPage("p11"), p11);
             assertEquals(pages.getPage("p2"), p2);
             assertEquals(pages.getPage("p3"), p3);
             assertEquals(pages.getPage("p4"), p4);
@@ -554,7 +556,6 @@ public class PageLibTest {
             assertEquals(pages.getPage("p7"), p7);
             assertEquals(pages.getPage("p8"), p8);
             assertEquals(pages.getPage("p9"), p9);
-            assertEquals(pages.getPage("p10"), p10);
         } catch (NotFoundException nfe) {
             fail();
         }
@@ -596,6 +597,7 @@ public class PageLibTest {
             fail();
         }
         assertEquals(pages.getPageList(), "Ahhh");
+        assertEquals(pages.getPageArrayList().size(), 1);
 
         try {
             pages.addPage(p2);
@@ -610,6 +612,7 @@ public class PageLibTest {
         }
 
         assertEquals(pages.getPageList(), "Ahhh");
+        assertEquals(pages.getPageArrayList().size(), 1);
 
         try {
             pages.removePage("ahhh");
@@ -618,5 +621,6 @@ public class PageLibTest {
         }
 
         assertEquals(pages.getPageList(), "");
+        assertEquals(pages.getPageArrayList().size(), 0);
     }
 }

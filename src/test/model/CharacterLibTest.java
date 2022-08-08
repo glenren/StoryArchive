@@ -37,6 +37,7 @@ public class CharacterLibTest {
         }
         assertFalse(charas.isCharaInLib("anyone"));
         assertEquals(charas.getCharaList(), "");
+        assertEquals(charas.getCharaArrayList().size(), 0);
     }
 
     @Test
@@ -56,6 +57,7 @@ public class CharacterLibTest {
             fail();
         }
         assertEquals(charas.getCharaList(), "c1");
+        assertEquals(charas.getCharaArrayList().size(), 1);
 
         try {
             charas.removeChara("c1");
@@ -78,6 +80,7 @@ public class CharacterLibTest {
             fail();
         } catch (NotFoundException nF) {
         }
+        assertEquals(charas.getCharaArrayList().size(), 0);
     }
 
     @Test
@@ -95,6 +98,7 @@ public class CharacterLibTest {
         assertTrue(charas.isCharaInLib("c1"));
         assertTrue(charas.isCharaInLib("c2"));
         assertEquals(charas.getCharaList(), "c1, c2");
+        assertEquals(charas.getCharaArrayList().size(), 2);
         try {
             assertEquals(charas.getChara("c1"), c1);
             assertEquals(charas.getChara("c2"), c2);
@@ -124,6 +128,7 @@ public class CharacterLibTest {
             fail();
         }
         assertEquals(charas.getCharaList(), "c2");
+        assertEquals(charas.getCharaArrayList().size(), 1);
 
         try {
             charas.removeChara("c2");
@@ -137,6 +142,7 @@ public class CharacterLibTest {
         assertFalse(charas.isCharaInLib("c1"));
         assertFalse(charas.isCharaInLib("c2"));
         assertEquals(charas.getCharaList(), "");
+        assertEquals(charas.getCharaArrayList().size(), 0);
         try {
             charas.getChara("c1");
             fail();
@@ -176,6 +182,7 @@ public class CharacterLibTest {
         assertTrue(charas.isCharaInLib("c2"));
         assertTrue(charas.isCharaInLib("c3"));
         assertEquals(charas.getCharaList(), "c1, c2, c3");
+        assertEquals(charas.getCharaArrayList().size(), 3);
         try {
             assertEquals(charas.getChara("c1"), c1);
             assertEquals(charas.getChara("c2"), c2);
@@ -213,6 +220,7 @@ public class CharacterLibTest {
             fail();
         }
         assertEquals(charas.getCharaList(), "c3");
+        assertEquals(charas.getCharaArrayList().size(), 1);
 
         try {
             charas.removeChara("c3");
@@ -227,6 +235,7 @@ public class CharacterLibTest {
         assertFalse(charas.isCharaInLib("c2"));
         assertFalse(charas.isCharaInLib("c3"));
         assertEquals(charas.getCharaList(), "");
+        assertEquals(charas.getCharaArrayList().size(), 0);
         try {
             charas.getChara("c1");
             fail();
@@ -276,6 +285,7 @@ public class CharacterLibTest {
         assertTrue(charas.isCharaInLib("c2"));
         assertTrue(charas.isCharaInLib("c3"));
         assertEquals(charas.getCharaList(), "c2, c3, c1");
+        assertEquals(charas.getCharaArrayList().size(), 3);
         try {
             assertEquals(charas.getChara("c1"), c1);
             assertEquals(charas.getChara("c2"), c2);
@@ -312,6 +322,7 @@ public class CharacterLibTest {
             fail();
         }
         assertEquals(charas.getCharaList(), "c2, c1");
+        assertEquals(charas.getCharaArrayList().size(), 2);
 
         try {
             charas.removeChara("c1");
@@ -331,6 +342,7 @@ public class CharacterLibTest {
         assertFalse(charas.isCharaInLib("c2"));
         assertFalse(charas.isCharaInLib("c3"));
         assertEquals(charas.getCharaList(), "");
+        assertEquals(charas.getCharaArrayList().size(), 0);
         try {
             charas.getChara("c1");
             fail();
@@ -391,6 +403,7 @@ public class CharacterLibTest {
             fail();
         }
         assertEquals(charas.getCharaList(), "c1");
+        assertEquals(charas.getCharaArrayList().size(), 1);
 
         try {
             assertTrue(charas.addChara(c2));
@@ -419,6 +432,7 @@ public class CharacterLibTest {
             fail();
         }
         assertEquals(charas.getCharaList(), "c1, c2");
+        assertEquals(charas.getCharaArrayList().size(), 2);
     }
 
     @Test
@@ -429,8 +443,6 @@ public class CharacterLibTest {
         Character c7 = new Character("c7", "d7");
         Character c8 = new Character("c8", "d8");
         Character c9 = new Character("c9", "d9");
-        Character c10 = new Character("c10", "d10");
-        Character c11 = new Character("c11", "d11");
 
         try {
             assertTrue(charas.addChara(c1));
@@ -441,15 +453,13 @@ public class CharacterLibTest {
             assertTrue(charas.addChara(c6));
             assertTrue(charas.addChara(c7));
             assertTrue(charas.addChara(c8));
-            assertTrue(charas.addChara(c9));
-            assertTrue(charas.addChara(c10));
         } catch (AlreadyExistsException aE) {
             fail();
         }
 
         assertFalse(charas.isEmpty());
         assertTrue(charas.isFull());
-        assertEquals(charas.length(), 10);
+        assertEquals(charas.length(), 8);
         assertTrue(charas.isCharaInLib("c1"));
         assertTrue(charas.isCharaInLib("c2"));
         assertTrue(charas.isCharaInLib("c3"));
@@ -458,9 +468,8 @@ public class CharacterLibTest {
         assertTrue(charas.isCharaInLib("c6"));
         assertTrue(charas.isCharaInLib("c7"));
         assertTrue(charas.isCharaInLib("c8"));
-        assertTrue(charas.isCharaInLib("c9"));
-        assertTrue(charas.isCharaInLib("c10"));
-        assertEquals(charas.getCharaList(), "c1, c2, c3, c4, c5, c6, c7, c8, c9, c10");
+        assertEquals(charas.getCharaList(), "c1, c2, c3, c4, c5, c6, c7, c8");
+        assertEquals(charas.getCharaArrayList().size(), 8);
         try {
             assertEquals(charas.getChara("c1"), c1);
             assertEquals(charas.getChara("c2"), c2);
@@ -470,21 +479,19 @@ public class CharacterLibTest {
             assertEquals(charas.getChara("c6"), c6);
             assertEquals(charas.getChara("c7"), c7);
             assertEquals(charas.getChara("c8"), c8);
-            assertEquals(charas.getChara("c9"), c9);
-            assertEquals(charas.getChara("c10"), c10);
         } catch (NotFoundException nfe) {
             fail();
         }
 
         try {
-            assertFalse(charas.addChara(c11));
+            assertFalse(charas.addChara(c9));
         } catch (AlreadyExistsException aE) {
             fail();
         }
 
         assertFalse(charas.isEmpty());
         assertTrue(charas.isFull());
-        assertEquals(charas.length(), 10);
+        assertEquals(charas.length(), 8);
         assertTrue(charas.isCharaInLib("c1"));
         assertTrue(charas.isCharaInLib("c2"));
         assertTrue(charas.isCharaInLib("c3"));
@@ -493,9 +500,8 @@ public class CharacterLibTest {
         assertTrue(charas.isCharaInLib("c6"));
         assertTrue(charas.isCharaInLib("c7"));
         assertTrue(charas.isCharaInLib("c8"));
-        assertTrue(charas.isCharaInLib("c9"));
-        assertTrue(charas.isCharaInLib("c10"));
-        assertEquals(charas.getCharaList(), "c1, c2, c3, c4, c5, c6, c7, c8, c9, c10");
+        assertEquals(charas.getCharaList(), "c1, c2, c3, c4, c5, c6, c7, c8");
+        assertEquals(charas.getCharaArrayList().size(), 8);
         try {
             assertEquals(charas.getChara("c1"), c1);
             assertEquals(charas.getChara("c2"), c2);
@@ -505,14 +511,12 @@ public class CharacterLibTest {
             assertEquals(charas.getChara("c6"), c6);
             assertEquals(charas.getChara("c7"), c7);
             assertEquals(charas.getChara("c8"), c8);
-            assertEquals(charas.getChara("c9"), c9);
-            assertEquals(charas.getChara("c10"), c10);
         } catch (NotFoundException nfe) {
             fail();
         }
-        assertFalse(charas.isCharaInLib("c11"));
+        assertFalse(charas.isCharaInLib("c9"));
         try {
-            charas.getChara("c11");
+            charas.getChara("c9");
             fail();
         } catch (NotFoundException nfe) {
         }
@@ -524,14 +528,14 @@ public class CharacterLibTest {
         }
 
         try {
-            assertTrue(charas.addChara(c11));
+            assertTrue(charas.addChara(c9));
         } catch (AlreadyExistsException aE) {
             fail();
         }
 
         assertFalse(charas.isEmpty());
         assertTrue(charas.isFull());
-        assertEquals(charas.length(), 10);
+        assertEquals(charas.length(), 8);
         assertFalse(charas.isCharaInLib("c1"));
         assertTrue(charas.isCharaInLib("c2"));
         assertTrue(charas.isCharaInLib("c3"));
@@ -541,11 +545,9 @@ public class CharacterLibTest {
         assertTrue(charas.isCharaInLib("c7"));
         assertTrue(charas.isCharaInLib("c8"));
         assertTrue(charas.isCharaInLib("c9"));
-        assertTrue(charas.isCharaInLib("c10"));
-        assertTrue(charas.isCharaInLib("c11"));
-        assertEquals(charas.getCharaList(), "c2, c3, c4, c5, c6, c7, c8, c9, c10, c11");
+        assertEquals(charas.getCharaList(), "c2, c3, c4, c5, c6, c7, c8, c9");
+        assertEquals(charas.getCharaArrayList().size(), 8);
         try {
-            assertEquals(charas.getChara("c11"), c11);
             assertEquals(charas.getChara("c2"), c2);
             assertEquals(charas.getChara("c3"), c3);
             assertEquals(charas.getChara("c4"), c4);
@@ -554,7 +556,6 @@ public class CharacterLibTest {
             assertEquals(charas.getChara("c7"), c7);
             assertEquals(charas.getChara("c8"), c8);
             assertEquals(charas.getChara("c9"), c9);
-            assertEquals(charas.getChara("c10"), c10);
         } catch (NotFoundException nfe) {
             fail();
         }
@@ -596,6 +597,7 @@ public class CharacterLibTest {
             fail();
         }
         assertEquals(charas.getCharaList(), "Ahhh");
+        assertEquals(charas.getCharaArrayList().size(), 1);
 
         try {
             charas.addChara(c2);
@@ -610,6 +612,7 @@ public class CharacterLibTest {
         }
 
         assertEquals(charas.getCharaList(), "Ahhh");
+        assertEquals(charas.getCharaArrayList().size(), 1);
 
         try {
             charas.removeChara("ahhh");
@@ -618,5 +621,6 @@ public class CharacterLibTest {
         }
 
         assertEquals(charas.getCharaList(), "");
+        assertEquals(charas.getCharaArrayList().size(), 0);
     }
 }
