@@ -32,3 +32,14 @@ As a user, I want to...
 
 - As a user, I want to be able to save my Archive (worlds, characters, pages, etc.) to file 
 - As a user, I want to be able to be able to load my Archive (worlds, characters, pages, etc.) from file 
+
+# Instructions for Grader
+
+- You can generate the first required event by:
+- - either loading or skipping in the opening menu
+- - clicking the button "Create a new world" in main menu
+- You can generate the second required event by:
+- - entering text to name the new world in the text box that comes up after
+- You can locate my visual component by looking with your eyes toward the top left of the frame
+- You can save the state of my application by clicking save archive in main menu
+- You can reload the state of my application by either agreeing to load archive in opening menu or clicking load archive in main menu
