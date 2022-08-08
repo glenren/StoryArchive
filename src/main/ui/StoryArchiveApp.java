@@ -542,7 +542,12 @@ public class StoryArchiveApp {
         newLabel("Confirm your submission: " + " " + page.getBody() + " " + text);
 
         JButton proceed = printButton("Proceed");
-        proceed.addActionListener(e -> page.addText(text));
+        proceed.addActionListener(e -> {
+            page.addText(text);
+            resetPanel();
+            newLabel("Description updated.");
+            returnMenu();
+        });
         JButton goBack = printButton("Go back");
         goBack.addActionListener(e -> addDescription(page));
     }
@@ -552,7 +557,12 @@ public class StoryArchiveApp {
         newLabel("Confirm your submission: " + " " + chara.getDesc() + " " + text);
 
         JButton proceed = printButton("Proceed");
-        proceed.addActionListener(e -> chara.addDesc(text));
+        proceed.addActionListener(e -> {
+            chara.addDesc(text);
+            resetPanel();
+            newLabel("Description updated.");
+            returnMenu();
+        });
         JButton goBack = printButton("Go back");
         goBack.addActionListener(e -> addDescription(chara));
     }
@@ -582,7 +592,12 @@ public class StoryArchiveApp {
         newLabel("Confirm your submission: " + " " + text);
 
         JButton proceed = printButton("Proceed");
-        proceed.addActionListener(e -> page.replaceText(text));
+        proceed.addActionListener(e -> {
+            page.replaceText(text);
+            resetPanel();
+            newLabel("Description updated.");
+            returnMenu();
+        });
         JButton goBack = printButton("Go back");
         goBack.addActionListener(e -> replaceDescription(page));
     }
@@ -592,7 +607,12 @@ public class StoryArchiveApp {
         newLabel("Confirm your submission: " + text);
 
         JButton proceed = printButton("Proceed");
-        proceed.addActionListener(e -> chara.replaceDesc(text));
+        proceed.addActionListener(e -> {
+            chara.replaceDesc(text);
+            resetPanel();
+            newLabel("Description updated.");
+            returnMenu();
+        });
         JButton goBack = printButton("Go back");
         goBack.addActionListener(e -> replaceDescription(chara));
     }
