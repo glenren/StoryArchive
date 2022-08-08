@@ -10,7 +10,7 @@ import java.util.ArrayList;
 // a collection of all the user's created worlds
 // base code: Lab 5 IncidentQueue
 public class WorldLib {
-    public static final int MAX_SIZE = 10;
+    public static final int MAX_SIZE = 8;
 
     private ArrayList<World> worlds;
 

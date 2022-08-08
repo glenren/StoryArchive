@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 // Story Archive Application
-// base code credit: TellerApp
+// base code credit: TellerApp but also now it should be unrecognizable lol
 public class StoryArchiveApp {
     private static final String JSON_STORE = "./data/archive.json";
     private WorldLib worlds;
@@ -38,10 +38,10 @@ public class StoryArchiveApp {
         frame.add(label, BorderLayout.NORTH);
         panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.setLayout(new GridLayout(7, 1));
+        panel.setLayout(new GridLayout(8, 1));
         panel.setVisible(true);
         frame.add(panel);
-        mainMenu();
+        openingMenu();
     }
 
     private void newLabel(String text) {
@@ -51,6 +51,21 @@ public class StoryArchiveApp {
     private void resetPanel() {
         panel.removeAll();
         panel.updateUI();
+    }
+
+    private void openingMenu() {
+        resetPanel();
+        newLabel("Welcome to Story Archive!");
+//        ImageIcon myIcon = new ImageIcon("./data/StoryArchive.png");
+//        Image img = myIcon.getImage().getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH);
+//        myIcon = new ImageIcon(img);
+//        JLabel icon = new JLabel();
+//        icon.setIcon(myIcon);
+//        frame.add(icon, BorderLayout.SOUTH);
+        JButton load = printButton("Load an Archive from file");
+        load.addActionListener(e -> loadArchive());
+        JButton skip = printButton("Skip");
+        skip.addActionListener(e -> mainMenu());
     }
 
     // MODIFIES: this
@@ -82,7 +97,7 @@ public class StoryArchiveApp {
 
     private void returnMenuButton() {
         JButton menu = printButton("Return to Main Menu");
-        menu.addActionListener(e -> returnMenu());
+        menu.addActionListener(e -> mainMenu());
     }
 
     private void worldViewButton(World world) {
@@ -92,11 +107,68 @@ public class StoryArchiveApp {
 
 // ------------ below here are the text formatting helper methods ------------
 
-    // EFFECTS: sets up the number option formatting
+    // MODIFIES: this
+    // EFFECTS: creates a button with given text and adds it to panel
     private JButton printButton(String text) {
         JButton button = new JButton(text);
         panel.add(button);
         return button;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates an edit world button with world name and adds it to panel
+    private void editWorldButton(String name, World world) {
+        JButton button = new JButton(name);
+        panel.add(button);
+        button.addActionListener(e -> editWorld(world));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a view world button with world name and adds it to panel
+    private void viewWorldButton(String name, World world) {
+        JButton button = new JButton(name);
+        panel.add(button);
+        button.addActionListener(e -> viewWorld(world));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates an edit page button with page title and adds it to panel
+    private void editPageButton(String name, PageLib pages, Page page) {
+        JButton button = new JButton(name);
+        panel.add(button);
+        button.addActionListener(e -> editPage(pages, page));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a view detail button with page title and adds it to panel
+    private void viewDetailPageButton(String name, PageLib pages, Page page, World world) {
+        JButton button = new JButton(name);
+        panel.add(button);
+        button.addActionListener(e -> viewDetailPage(pages, page, world));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a view detail button with page title and adds it to panel
+    private void viewStoryPageButton(String name, PageLib pages, Page page, World world) {
+        JButton button = new JButton(name);
+        panel.add(button);
+        button.addActionListener(e -> viewStoryPage(pages, page, world));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates an edit character button with character name and adds it to panel
+    private void editCharacterButton(String name, CharacterLib charas, Character chara) {
+        JButton button = new JButton(name);
+        panel.add(button);
+        button.addActionListener(e -> editCharacter(charas, chara));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a view character button with character name and adds it to panel
+    private void viewCharacterButton(String name, CharacterLib charas, Character chara, World world) {
+        JButton button = new JButton(name);
+        panel.add(button);
+        button.addActionListener(e -> viewCharacter(charas, chara, world));
     }
 
     // EFFECTS: provides the full text
@@ -119,17 +191,8 @@ public class StoryArchiveApp {
     // EFFECTS: provides the return to menu text
     private void returnMenu() {
         label.setText(label.getText() + " Returning to menu.");
-        mainMenu();
-    }
-
-    // EFFECTS: provides the thing not found text
-    private void notFound(String thing) {
-        resetPanel();
-        if (thing.equals("world") || thing.equals("character")) {
-            newLabel("There is no " + thing + " found with the inputted name.");
-        } else {
-            newLabel("There is no " + thing + " found with the inputted title.");
-        }
+        JButton ok = printButton("Ok");
+        ok.addActionListener(e -> mainMenu());
     }
 
     // EFFECTS: provides the no existing things text
@@ -145,15 +208,6 @@ public class StoryArchiveApp {
             return "Enter the name of your new " + thing + ": ";
         } else {
             return "Enter the title of your new " + thing + ": ";
-        }
-    }
-
-    // EFFECTS: provides the name/title entering text
-    private String enterThe(String thing, String action) {
-        if (thing.equals("world") || thing.equals("character")) {
-            return "Enter the name of the " + thing + " you would like to " + action + ": ";
-        } else {
-            return "Enter the title of the " + thing + " you would like to " + action + ": ";
         }
     }
 
@@ -222,23 +276,10 @@ public class StoryArchiveApp {
         if (worlds.isEmpty()) {
             notExist("worlds");
         } else {
-            newLabel("\nYour existing worlds:");
+            newLabel("\nSelect the world you would like to edit:");
             for (World w : worlds.getWorldArrayList()) {
-                label.setText(label.getText() + " " + w.getName() + ",");
+                editWorldButton(w.getName(), w);
             }
-            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
-            label.setText(label.getText() + enterThe("world", "edit"));
-            TextField textField = new TextField();
-            panel.add(textField);
-            textField.addActionListener(e -> {
-                String name = textField.getText();
-                try {
-                    editWorld(worlds.getWorld(name));
-                } catch (NotFoundException exc) {
-                    notFound("world");
-                    editExistingWorld();
-                }
-            });
         }
     }
 
@@ -248,23 +289,10 @@ public class StoryArchiveApp {
         if (worlds.isEmpty()) {
             notExist("worlds");
         } else {
-            newLabel("Your existing worlds:");
+            newLabel("Select the world you would like to view:");
             for (World w : worlds.getWorldArrayList()) {
-                label.setText(label.getText() + " " + w.getName() + ",");
+                viewWorldButton(w.getName(), w);
             }
-            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
-            label.setText(label.getText() + enterThe("world", "view"));
-            TextField textField = new TextField();
-            panel.add(textField);
-            textField.addActionListener(e -> {
-                String name = textField.getText();
-                try {
-                    viewWorld(worlds.getWorld(name));
-                } catch (NotFoundException exc) {
-                    notFound("world");
-                    viewExistingWorld();
-                }
-            });
         }
     }
 
@@ -678,23 +706,10 @@ public class StoryArchiveApp {
         if (details.isEmpty()) {
             notExist("world detail pages");
         } else {
-            newLabel("\nYour existing pages: ");
+            newLabel("\nSelect the world detail page you would like to edit:");
             for (Page p : details.getPageArrayList()) {
-                label.setText(label.getText() + " " + p.getTitle() + ",");
+                editPageButton(p.getTitle(), details, p);
             }
-            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
-            label.setText(label.getText() + enterThe("page", "edit"));
-            TextField textField = new TextField();
-            panel.add(textField);
-            textField.addActionListener(e -> {
-                String name = textField.getText();
-                try {
-                    editPage(details, details.getPage(name));
-                } catch (NotFoundException exc) {
-                    notFound("page");
-                    editExistingDetails(details);
-                }
-            });
         }
     }
 
@@ -705,22 +720,10 @@ public class StoryArchiveApp {
         if (details.isEmpty()) {
             notExist("world detail pages");
         } else {
-            newLabel("Your existing pages: ");
+            newLabel("Select the world detail page you would like to view:");
             for (Page p : details.getPageArrayList()) {
-                label.setText(label.getText() + " " + p.getTitle() + ",");
+                viewDetailPageButton(p.getTitle(), details, p, world);
             }
-            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
-            label.setText(label.getText() + enterThe("page", "view"));
-            TextField textField = new TextField();
-            panel.add(textField);
-            textField.addActionListener(e -> {
-                try {
-                    viewDetailPage(details, details.getPage(textField.getText()), world);
-                } catch (NotFoundException exc) {
-                    notFound("page");
-                    viewDetails(details, world);
-                }
-            });
         }
     }
 
@@ -769,23 +772,10 @@ public class StoryArchiveApp {
         if (charas.isEmpty()) {
             notExist("characters");
         } else {
-            newLabel("\nYour existing characters: ");
+            newLabel("\nSelect the character you would like to edit:");
             for (Character c : charas.getCharaArrayList()) {
-                label.setText(label.getText() + " " + c.getName() + ",");
+                editCharacterButton(c.getName(), charas, c);
             }
-            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
-            label.setText(label.getText() + enterThe("character", "edit"));
-            TextField textField = new TextField();
-            panel.add(textField);
-            textField.addActionListener(e -> {
-                String name = textField.getText();
-                try {
-                    editCharacter(charas, charas.getChara(name));
-                } catch (NotFoundException exc) {
-                    notFound("character");
-                    editExistingCharacter(charas);
-                }
-            });
         }
     }
 
@@ -795,22 +785,10 @@ public class StoryArchiveApp {
         if (charas.isEmpty()) {
             notExist("characters");
         } else {
-            newLabel("\nYour existing characters: ");
+            newLabel("\nSelect the character you would like to view:");
             for (Character c : charas.getCharaArrayList()) {
-                label.setText(label.getText() + " " + c.getName() + ",");
+                viewCharacterButton(c.getName(), charas, c, world);
             }
-            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
-            label.setText(label.getText() + enterThe("character", "view"));
-            TextField textField = new TextField();
-            panel.add(textField);
-            textField.addActionListener(e -> {
-                try {
-                    viewCharacter(charas, charas.getChara(textField.getText()), world);
-                } catch (NotFoundException exc) {
-                    notFound("character");
-                    viewCharas(charas, world);
-                }
-            });
         }
     }
 
@@ -821,23 +799,10 @@ public class StoryArchiveApp {
         if (story.isEmpty()) {
             notExist("chapters");
         } else {
-            newLabel("\nYour existing chapters:");
+            newLabel("\nSelect the chapter you would like to edit:");
             for (Page p : story.getPageArrayList()) {
-                label.setText(label.getText() + " " + p.getTitle() + ",");
+                editPageButton(p.getTitle(), story, p);
             }
-            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
-            label.setText(label.getText() + enterThe("chapter", "edit"));
-            TextField textField = new TextField();
-            panel.add(textField);
-            textField.addActionListener(e -> {
-                String name = textField.getText();
-                try {
-                    editPage(story, story.getPage(name));
-                } catch (NotFoundException exc) {
-                    notFound("chapter");
-                    editExistingChapter(story);
-                }
-            });
         }
     }
 
@@ -847,22 +812,10 @@ public class StoryArchiveApp {
         if (story.isEmpty()) {
             notExist("chapters");
         } else {
-            newLabel("Your existing chapters:");
+            newLabel("Select the chapter you would like to view:");
             for (Page p : story.getPageArrayList()) {
-                label.setText(label.getText() + " " + p.getTitle() + ",");
+                viewStoryPageButton(p.getTitle(), story, p, world);
             }
-            label.setText(label.getText().substring(0, label.getText().length() - 1) + ". ");
-            label.setText(label.getText() + enterThe("chapter", "view"));
-            TextField textField = new TextField();
-            panel.add(textField);
-            textField.addActionListener(e -> {
-                try {
-                    viewStoryPage(story, story.getPage(textField.getText()), world);
-                } catch (NotFoundException exc) {
-                    notFound("chapter");
-                    viewStory(story, world);
-                }
-            });
         }
     }
 
@@ -911,21 +864,24 @@ public class StoryArchiveApp {
     private void viewStoryPage(PageLib story, Page chapter, World world) {
         resetPanel();
         newLabel(chapter.getTitle() + ": " + chapter.getBody());
-        viewNextStory(story, world);
+        JButton ok = printButton("Proceed");
+        ok.addActionListener(e -> viewNextStory(story, world));
     }
 
     // EFFECTS: provides the menu for the viewing of a detail page
     private void viewDetailPage(PageLib details, Page detail, World world) {
         resetPanel();
         newLabel(detail.getTitle() + ": " + detail.getBody());
-        viewNextDetails(details, world);
+        JButton ok = printButton("Proceed");
+        ok.addActionListener(e -> viewNextDetails(details, world));
     }
 
     // EFFECTS: provides the menu for the viewing of a character
     private void viewCharacter(CharacterLib charas, Character chara, World world) {
         resetPanel();
         newLabel(chara.getName() + ": " + chara.getDesc());
-        viewNextChara(charas, world);
+        JButton ok = printButton("Proceed");
+        ok.addActionListener(e -> viewNextChara(charas, world));
     }
 
     // MODIFIES: chara
@@ -976,10 +932,10 @@ public class StoryArchiveApp {
             jsonWriter.open();
             jsonWriter.write(worlds);
             jsonWriter.close();
-            newLabel("Saved current Story Archive to " + JSON_STORE);
+            newLabel("Saved current Story Archive to " + JSON_STORE + ".");
             returnMenu();
         } catch (FileNotFoundException e) {
-            newLabel("Unable to write to file: " + JSON_STORE);
+            newLabel("Unable to write to file: " + JSON_STORE + ".");
             returnMenu();
         }
     }
@@ -990,10 +946,10 @@ public class StoryArchiveApp {
         resetPanel();
         try {
             worlds = jsonReader.read();
-            newLabel("Loaded up Story Archive from " + JSON_STORE);
+            newLabel("Loaded up Story Archive from " + JSON_STORE + ".");
             returnMenu();
         } catch (IOException e) {
-            newLabel("Unable to read from file: " + JSON_STORE);
+            newLabel("Unable to read from file: " + JSON_STORE + ".");
             returnMenu();
         }
     }

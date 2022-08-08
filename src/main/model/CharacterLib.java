@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 // a collection of characters
 public class CharacterLib {
-    public static final int MAX_SIZE = 10;
+    public static final int MAX_SIZE = 8;
 
     private ArrayList<Character> charas;
 

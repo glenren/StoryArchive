@@ -9,7 +9,7 @@ import java.util.ArrayList;
 // a collection of pages
 // base code: WorldLib which has base code Lab 5 Incident Queue
 public class PageLib {
-    public static final int MAX_SIZE = 10;
+    public static final int MAX_SIZE = 8;
 
     private ArrayList<Page> pages;
 
