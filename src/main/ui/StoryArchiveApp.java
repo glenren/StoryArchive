@@ -22,7 +22,8 @@ public class StoryArchiveApp {
     JFrame frame;
     JPanel panel;
     JLabel label;
-    JPanel topPanel;
+    JPanel iconPanel;
+    JPanel textPanel;
 
     // EFFECTS: initiates the Story Archive application
     public StoryArchiveApp() {
@@ -30,25 +31,36 @@ public class StoryArchiveApp {
         jsonReader = new JsonReader(JSON_STORE);
         worlds = new WorldLib();
         initiateFrame();
-        topPanel = new JPanel();
-        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
-        topPanel.setLayout(new GridLayout(2, 1));
-        addToFrame(topPanel, BorderLayout.NORTH);
-        ImageIcon myIcon = new ImageIcon("./data/StoryArchive.png");
-        Image img = myIcon.getImage().getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH);
-        myIcon = new ImageIcon(img);
-        JLabel icon = new JLabel();
-        icon.setIcon(myIcon);
-        topPanel.add(icon);
-        label = new JLabel();
-        topPanel.add(label);
-        topPanel.setVisible(true);
+        initiateTopPanels();
         panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
-        panel.setLayout(new GridLayout(MAX_SIZE, 1));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 100, 10, 100));
+        panel.setLayout(new GridLayout(MAX_SIZE / 2, 2));
         panel.setVisible(true);
         addToFrame(panel);
         openingMenu();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initiates the top two panels (iconPanel and textPanel)
+    private void initiateTopPanels() {
+        iconPanel = new JPanel();
+        textPanel = new JPanel();
+        iconPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+        textPanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 20, 10));
+        iconPanel.setLayout(new GridBagLayout());
+        textPanel.setLayout(new GridBagLayout());
+        addToFrameSouth(iconPanel);
+        addToFrameNorth(textPanel);
+        ImageIcon myIcon = new ImageIcon("./data/StoryArchive.png");
+        Image img = myIcon.getImage().getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH);
+        myIcon = new ImageIcon(img);
+        JLabel icon = new JLabel();
+        icon.setIcon(myIcon);
+        iconPanel.add(icon);
+        label = new JLabel();
+        textPanel.add(label);
+        iconPanel.setVisible(true);
+        textPanel.setVisible(true);
     }
 
     // MODIFIES: this
@@ -72,9 +84,17 @@ public class StoryArchiveApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds component to the frame at constraint
-    private void addToFrame(Component c, Object constraints) {
-        frame.add(c, constraints);
+    // EFFECTS: adds component to the frame at NORTH
+    private void addToFrameNorth(Component c) {
+        frame.add(c, BorderLayout.NORTH);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds component to the frame at SOUTH
+    private void addToFrameSouth(Component c) {
+        frame.add(c, BorderLayout.SOUTH);
         frame.pack();
         frame.setVisible(true);
     }
@@ -280,7 +300,6 @@ public class StoryArchiveApp {
         resetPanel();
         if (worlds.isFull()) {
             full("worlds");
-            returnMenu();
         } else {
             newLabel(enterThe("world"));
             TextField textField = new TextField();
