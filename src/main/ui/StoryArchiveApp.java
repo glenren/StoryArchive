@@ -15,6 +15,7 @@ import java.io.IOException;
 // base code credit: TellerApp but also now it should be unrecognizable lol
 public class StoryArchiveApp {
     private static final String JSON_STORE = "./data/archive.json";
+    public static final int MAX_SIZE = 8;
     private WorldLib worlds;
     private final JsonWriter jsonWriter;
     private final JsonReader jsonReader;
@@ -44,7 +45,7 @@ public class StoryArchiveApp {
         topPanel.setVisible(true);
         panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
-        panel.setLayout(new GridLayout(8, 1));
+        panel.setLayout(new GridLayout(MAX_SIZE, 1));
         panel.setVisible(true);
         addToFrame(panel);
         openingMenu();

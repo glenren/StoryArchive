@@ -3,12 +3,13 @@ package model;
 import exceptions.AlreadyExistsException;
 import exceptions.NotFoundException;
 import org.json.JSONArray;
+import ui.StoryArchiveApp;
 
 import java.util.ArrayList;
 
 // a collection of characters
 public class CharacterLib {
-    public static final int MAX_SIZE = 8;
+    public static final int MAX_SIZE = StoryArchiveApp.MAX_SIZE;
 
     private ArrayList<Character> charas;
 

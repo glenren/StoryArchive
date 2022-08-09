@@ -4,13 +4,14 @@ import exceptions.AlreadyExistsException;
 import exceptions.NotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import ui.StoryArchiveApp;
 
 import java.util.ArrayList;
 
 // a collection of all the user's created worlds
 // base code: Lab 5 IncidentQueue
 public class WorldLib {
-    public static final int MAX_SIZE = 8;
+    public static final int MAX_SIZE = StoryArchiveApp.MAX_SIZE;
 
     private ArrayList<World> worlds;
 

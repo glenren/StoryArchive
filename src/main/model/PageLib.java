@@ -3,13 +3,14 @@ package model;
 import exceptions.AlreadyExistsException;
 import exceptions.NotFoundException;
 import org.json.JSONArray;
+import ui.StoryArchiveApp;
 
 import java.util.ArrayList;
 
 // a collection of pages
 // base code: WorldLib which has base code Lab 5 Incident Queue
 public class PageLib {
-    public static final int MAX_SIZE = 8;
+    public static final int MAX_SIZE = StoryArchiveApp.MAX_SIZE;
 
     private ArrayList<Page> pages;
 
