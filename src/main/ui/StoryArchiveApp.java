@@ -34,7 +34,7 @@ public class StoryArchiveApp {
         initiateTopPanels();
         panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(5, 100, 10, 100));
-        panel.setLayout(new GridLayout(MAX_SIZE / 2, 2));
+        panel.setLayout(new GridLayout(MAX_SIZE, 1));
         panel.setVisible(true);
         addToFrame(panel);
         openingMenu();
@@ -251,6 +251,7 @@ public class StoryArchiveApp {
 
     // EFFECTS: provides the return to menu text
     private void returnMenu() {
+        resetPanel();
         label.setText(label.getText() + " Returning to menu.");
         JButton ok = printButton("Ok");
         ok.addActionListener(e -> mainMenu());
@@ -425,7 +426,7 @@ public class StoryArchiveApp {
                 throw new RuntimeException(exception);
             }
             String worldName = world.getName().substring(0, 1).toUpperCase() + world.getName().substring(1);
-            newLabel(worldName + "has been permanently removed from Archive.");
+            newLabel(worldName + " has been permanently removed from Archive.");
             returnMenu();
         });
         JButton goBack = printButton("Go back");
@@ -946,7 +947,7 @@ public class StoryArchiveApp {
                 throw new RuntimeException(exception);
             }
             String pageTitle = page.getTitle().substring(0, 1).toUpperCase() + page.getTitle().substring(1);
-            newLabel(pageTitle + "has been permanently removed from Archive.");
+            newLabel(pageTitle + " has been permanently removed from Archive.");
             returnMenu();
         });
         JButton goBack = printButton("Go back");
@@ -1015,7 +1016,7 @@ public class StoryArchiveApp {
                 throw new RuntimeException(exception);
             }
             String charaName = chara.getName().substring(0, 1).toUpperCase() + chara.getName().substring(1);
-            newLabel(charaName + "has been permanently removed from Archive.");
+            newLabel(charaName + " has been permanently removed from Archive.");
             returnMenu();
         });
         JButton goBack = printButton("Go back");

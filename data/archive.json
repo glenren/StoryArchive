@@ -1,33 +1,60 @@
-{"worlds": [{
-    "characters": [
-        {
-            "name": "Victor Moon",
-            "desc": "Mage"
-        },
-        {
-            "name": "Ivenna Brightheart",
-            "desc": "Craftsman"
-        }
-    ],
-    "name": "Arcaenus",
-    "details": [
-        {
-            "title": "Geography",
-            "body": "Magic Island"
-        },
-        {
-            "title": "People",
-            "body": "Mages and Craftsmen"
-        }
-    ],
-    "story": [
-        {
-            "title": "Chapter 1",
-            "body": "text"
-        },
-        {
-            "title": "Chapter 2",
-            "body": "text"
-        }
-    ]
-}]}
+{"worlds": [
+    {
+        "characters": [
+            {
+                "name": "Victor Moon",
+                "desc": "Mage"
+            },
+            {
+                "name": "Ivenna Brightheart",
+                "desc": "Craftsman"
+            }
+        ],
+        "name": "Arcaenus",
+        "details": [
+            {
+                "title": "Geography",
+                "body": "Magic Island"
+            },
+            {
+                "title": "People",
+                "body": "Mages and Craftsmen"
+            }
+        ],
+        "story": [
+            {
+                "title": "Chapter 1",
+                "body": "text"
+            },
+            {
+                "title": "Chapter 2",
+                "body": "text"
+            }
+        ]
+    },
+    {
+        "characters": [
+            {
+                "name": "Nyx",
+                "desc": "My best friend <3"
+            },
+            {
+                "name": "Glen",
+                "desc": "Me!"
+            },
+            {
+                "name": "You",
+                "desc": "It's you :)"
+            }
+        ],
+        "name": "Earth",
+        "details": [{
+            "title": "Vancouver",
+            "body": "UBC is here"
+        }],
+        "story": [{
+            "title": "CPSC 210",
+            "body": "Almost over!"
+        }]
+    }
+]}
