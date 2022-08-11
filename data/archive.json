@@ -3,22 +3,26 @@
         "characters": [
             {
                 "name": "Victor Moon",
-                "desc": "Mage"
+                "desc": "Son of two skilled craftsmen, he is branching off from his family trade to study magic."
             },
             {
                 "name": "Ivenna Brightheart",
-                "desc": "Craftsman"
+                "desc": "Daughter of a prestigious mage lineage who dreams to bridge the gap between Mages and Craftsmen."
             }
         ],
         "name": "Arcaenus",
         "details": [
             {
                 "title": "Geography",
-                "body": "Magic Island"
+                "body": "A magical floating island, held up by mysterious rocks known as Arcana Crystals."
             },
             {
                 "title": "People",
-                "body": "Mages and Craftsmen"
+                "body": "Mages (attuned to Arcana Crystals, can channel their powers) and Craftsmen (use Arcana Crystals to create and power technology)"
+            },
+            {
+                "title": "Arcana Crystals",
+                "body": "Mysterious rocks with magical properties. Legend says that they were created from the remains of an ancient beast."
             }
         ],
         "story": [
@@ -55,6 +59,21 @@
         "story": [{
             "title": "CPSC 210",
             "body": "Almost over!"
+        }]
+    },
+    {
+        "characters": [{
+            "name": "Delete me",
+            "desc": "I am to be a demonstration for how to delete characters!"
+        }],
+        "name": "Delete Demonstration",
+        "details": [{
+            "title": "Delete me",
+            "body": "I am to be a demonstration for how to delete pages!"
+        }],
+        "story": [{
+            "title": "Delete me",
+            "body": "I am to be a demonstration for how to delete pages!"
         }]
     }
 ]}

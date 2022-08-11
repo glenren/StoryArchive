@@ -43,3 +43,17 @@ As a user, I want to...
 - You can locate my visual component by looking with your eyes toward the top left of the frame
 - You can save the state of my application by clicking save archive in main menu
 - You can reload the state of my application by either agreeing to load archive in opening menu or clicking load archive in main menu
+
+# Phase 4: Task 2
+Thu Aug 11 10:54:51 PDT 2022
+Added a new world named World1 to Archive.
+Thu Aug 11 10:54:54 PDT 2022
+Renamed world World1 to World.
+Thu Aug 11 10:54:58 PDT 2022
+Added a new world named World2 to Archive.
+Thu Aug 11 10:55:06 PDT 2022
+Renamed world World2 to World1.
+Thu Aug 11 10:55:15 PDT 2022
+Renamed world World1 to World4.
+Thu Aug 11 10:55:19 PDT 2022
+Added a new world named World3 to Archive.

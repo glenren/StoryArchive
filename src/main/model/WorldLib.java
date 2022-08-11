@@ -23,12 +23,15 @@ public class WorldLib {
     // MODIFIES: this
     // EFFECTS: add a world to worlds if worlds isn't full and return true, false if full
     public boolean addWorld(World newWorld) throws AlreadyExistsException {
-        if (isWorldInLib(newWorld.getName())) {
+        String name = newWorld.getName();
+        if (isWorldInLib(name)) {
             throw new AlreadyExistsException();
         } else {
             boolean notFull = !isFull();
             if (notFull) {
+                Event e = new Event("Added a new world named " + name + " to Archive.");
                 worlds.add(newWorld);
+                EventLog.getInstance().logEvent(e);
                 return true;
             } else {
                 return false;

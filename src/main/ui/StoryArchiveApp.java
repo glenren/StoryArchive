@@ -4,10 +4,13 @@ import exceptions.AlreadyExistsException;
 import exceptions.NotFoundException;
 import model.*;
 import model.Character;
+import model.Event;
 import persistence.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -19,6 +22,7 @@ public class StoryArchiveApp {
     private WorldLib worlds;
     private final JsonWriter jsonWriter;
     private final JsonReader jsonReader;
+    private static String newLine = "<br/>";
     JFrame frame;
     JPanel panel;
     JLabel label;
@@ -67,12 +71,36 @@ public class StoryArchiveApp {
     // EFFECTS: initiates the frame
     private void initiateFrame() {
         frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                frame.setVisible(true);
+                resetPanel();
+                newLabel("Are you sure you want to quit the application?");
+                JButton proceed = printButton("Proceed");
+                proceed.addActionListener(e -> leaveScreen());
+                JButton goBack = printButton("Go back");
+                goBack.addActionListener(e -> mainMenu());
+            }
+        });
         frame.setPreferredSize(new Dimension(800, 600));
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setTitle("Story Archive");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: presents the exit screen
+    private void leaveScreen() {
+        resetPanel();
+        for (Event next : EventLog.getInstance()) {
+            System.out.println(next.toString());
+        }
+        newLabel("Thank you for using Story Archive, we hope to see you again!");
+        JButton exit = printButton("Exit");
+        exit.addActionListener(event -> System.exit(0));
     }
 
     // MODIFIES: this
@@ -102,7 +130,14 @@ public class StoryArchiveApp {
     // MODIFIES: this
     // EFFECTS: sets the text of this.label to given text
     private void newLabel(String text) {
-        this.label.setText(text);
+        label.setText("<html>" + text + "</html>");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the text of this.label to have text added to it
+    private void addLabel(String text) {
+        String oldText = label.getText().substring(0, label.getText().length() - 8);
+        label.setText(oldText + newLine + text + "</html>");
     }
 
     // MODIFIES: this
@@ -130,7 +165,7 @@ public class StoryArchiveApp {
     // EFFECTS: gives the main menu buttons
     private void mainMenu() {
         resetPanel();
-        newLabel("\nWhat would you like to do?");
+        newLabel("What would you like to do?");
         loadButtons();
     }
 
@@ -252,7 +287,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the return to menu text
     private void returnMenu() {
         resetPanel();
-        label.setText(label.getText() + " Returning to menu.");
+        addLabel("Returning to menu.");
         JButton ok = printButton("Ok");
         ok.addActionListener(e -> mainMenu());
     }
@@ -340,7 +375,7 @@ public class StoryArchiveApp {
         if (worlds.isEmpty()) {
             notExist("worlds");
         } else {
-            newLabel("\nSelect the world you would like to edit:");
+            newLabel("Select the world you would like to edit:");
             for (World w : worlds.getWorldArrayList()) {
                 editWorldButton(w.getName(), w);
             }
@@ -417,7 +452,8 @@ public class StoryArchiveApp {
     // EFFECTS: provides the world removing menu for a specific world
     private void removeWorld(World world) {
         resetPanel();
-        newLabel("Permanently remove " + world.getName() + " from Archive? (This action cannot be undone.)");
+        newLabel("Permanently remove " + world.getName()
+                + " from Archive?" + newLine + "(This action cannot be undone.)");
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> {
             try {
@@ -438,7 +474,7 @@ public class StoryArchiveApp {
     private void viewWorld(World world) {
         resetPanel();
         String worldName = world.getName();
-        newLabel("\nWhat part of " + worldName + " would you like to view?");
+        newLabel("What part of " + worldName + " would you like to view?");
 
         JButton details = printButton("View " + worldName + "'s world details");
         details.addActionListener(e -> viewDetails(world.getDetailsLib(), world));
@@ -647,7 +683,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for adding to a page's description once text was submitted
     private void addedDescription(Page page, String text) {
         resetPanel();
-        newLabel("Confirm your submission: " + " " + page.getBody() + " " + text);
+        newLabel("Confirm your submission: " + newLine + page.getBody() + " " + text);
 
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> {
@@ -664,7 +700,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for adding to a chara's description once text was submitted
     private void addedDescription(Character chara, String text) {
         resetPanel();
-        newLabel("Confirm your submission: " + " " + chara.getDesc() + " " + text);
+        newLabel("Confirm your submission: " + newLine + chara.getDesc() + " " + text);
 
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> {
@@ -794,7 +830,7 @@ public class StoryArchiveApp {
         if (details.isEmpty()) {
             notExist("world detail pages");
         } else {
-            newLabel("\nSelect the world detail page you would like to edit:");
+            newLabel("Select the world detail page you would like to edit:");
             for (Page p : details.getPageArrayList()) {
                 editPageButton(p.getTitle(), details, p);
             }
@@ -863,7 +899,7 @@ public class StoryArchiveApp {
         if (charas.isEmpty()) {
             notExist("characters");
         } else {
-            newLabel("\nSelect the character you would like to edit:");
+            newLabel("Select the character you would like to edit:");
             for (Character c : charas.getCharaArrayList()) {
                 editCharacterButton(c.getName(), charas, c);
             }
@@ -877,7 +913,7 @@ public class StoryArchiveApp {
         if (charas.isEmpty()) {
             notExist("characters");
         } else {
-            newLabel("\nSelect the character you would like to view:");
+            newLabel("Select the character you would like to view:");
             for (Character c : charas.getCharaArrayList()) {
                 viewCharacterButton(c.getName(), charas, c, world);
             }
@@ -891,7 +927,7 @@ public class StoryArchiveApp {
         if (story.isEmpty()) {
             notExist("chapters");
         } else {
-            newLabel("\nSelect the chapter you would like to edit:");
+            newLabel("Select the chapter you would like to edit:");
             for (Page p : story.getPageArrayList()) {
                 editPageButton(p.getTitle(), story, p);
             }
@@ -938,7 +974,8 @@ public class StoryArchiveApp {
     // EFFECTS: provides the page removing menu for a specific page
     private void removePage(PageLib pages, Page page) {
         resetPanel();
-        newLabel("Permanently remove " + page.getTitle() + " from Archive? (This action cannot be undone.)");
+        newLabel("Permanently remove " + page.getTitle()
+                + " from Archive?" + newLine + "(This action cannot be undone.)");
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> {
             try {
@@ -958,7 +995,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for the viewing of a story page
     private void viewStoryPage(PageLib story, Page chapter, World world) {
         resetPanel();
-        newLabel(chapter.getTitle() + ": " + chapter.getBody());
+        newLabel(chapter.getTitle() + ": " + newLine + chapter.getBody());
         JButton ok = printButton("Proceed");
         ok.addActionListener(e -> viewNextStory(story, world));
     }
@@ -967,7 +1004,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for the viewing of a detail page
     private void viewDetailPage(PageLib details, Page detail, World world) {
         resetPanel();
-        newLabel(detail.getTitle() + ": " + detail.getBody());
+        newLabel(detail.getTitle() + ": " + newLine + detail.getBody());
         JButton ok = printButton("Proceed");
         ok.addActionListener(e -> viewNextDetails(details, world));
     }
@@ -976,7 +1013,7 @@ public class StoryArchiveApp {
     // EFFECTS: provides the menu for the viewing of a character
     private void viewCharacter(CharacterLib charas, Character chara, World world) {
         resetPanel();
-        newLabel(chara.getName() + ": " + chara.getDesc());
+        newLabel(chara.getName() + ": " + newLine + chara.getDesc());
         JButton ok = printButton("Proceed");
         ok.addActionListener(e -> viewNextChara(charas, world));
     }
@@ -986,7 +1023,7 @@ public class StoryArchiveApp {
     private void editCharacter(CharacterLib charas, Character chara) {
         resetPanel();
         String name = chara.getName();
-        newLabel("\nHow would you like to edit " + name + "?");
+        newLabel("How would you like to edit " + name + "?");
 
         JButton reTitle = printButton("Rename " + name);
         reTitle.addActionListener(e -> renameCharacter(chara));
@@ -1007,7 +1044,8 @@ public class StoryArchiveApp {
     // EFFECTS: provides the character removing menu for a specific character
     private void removeCharacter(CharacterLib charas, Character chara) {
         resetPanel();
-        newLabel("Permanently remove " + chara.getName() + " from Archive?\n(This action cannot be undone.)");
+        newLabel("Permanently remove " + chara.getName()
+                + " from Archive?" + newLine + "(This action cannot be undone.)");
         JButton proceed = printButton("Proceed");
         proceed.addActionListener(e -> {
             try {

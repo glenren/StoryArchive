@@ -41,7 +41,9 @@ public class World {
     // MODIFIES: this
     // EFFECTS: changes world name to name
     public void rename(String name) {
+        Event e = new Event("Renamed world " + this.name + " to " + name + ".");
         this.name = name;
+        EventLog.getInstance().logEvent(e);
     }
 
     // EFFECTS: returns this world as a JSON object
