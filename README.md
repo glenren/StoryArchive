@@ -36,10 +36,10 @@ As a user, I want to...
 # Instructions for Grader
 
 - You can generate the first required event by:
-- - either loading or skipping in the opening menu
-- - clicking the button "Create a new world" in main menu
+  - either loading or skipping in the opening menu
+  - clicking the button "Create a new world" in main menu
 - You can generate the second required event by:
-- - entering text to name the new world in the text box that comes up after
+  - entering text to name the new world in the text box that comes up after
 - You can locate my visual component by looking with your eyes toward the top left of the frame
 - You can save the state of my application by clicking save archive in main menu
 - You can reload the state of my application by either agreeing to load archive in opening menu or clicking load archive in main menu
@@ -57,3 +57,10 @@ Thu Aug 11 10:55:15 PDT 2022
 Renamed world World1 to World4.
 Thu Aug 11 10:55:19 PDT 2022
 Added a new world named World3 to Archive.
+
+# Phase 4: Task 3
+- make an abstract class "Library", and have all my Lib classes extend it
+  - implement the duplicate methods like "add", "get", "remove", "contains", "full", etc.
+- make an abstract class "File", and have Character, World, and Page extend it
+  - implement the duplicate methods like "getName", "rename", "addText", "replaceText", "getText", etc.
+- split StoryArchiveApp into a GUI class and an action class
